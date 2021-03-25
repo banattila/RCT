@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hu.banattila.kontrollerek.VidamParkKontroller">
+   <children>
+      <HBox layoutX="621.0" layoutY="6.0" prefHeight="100.0" prefWidth="395.0" />
+      <Pane layoutX="14.0" layoutY="14.0" prefHeight="200.0" prefWidth="200.0">
+         <children>
+            <Button styleClass="btn" id="csonakazo" fx:id="csonakazo" layoutY="1.0" mnemonicParsing="false" text="Csónakázó" />
+            <Label id="csonakazoSzint" fx:id="csonakazoSzint" layoutX="143.0" layoutY="5.0"  text="Szint:" visible="false" />
+         </children>
+      </Pane>
+      <Pane layoutX="89.0" layoutY="346.0" prefHeight="200.0" prefWidth="200.0">
+         <children>
+            <Button id="korhinta" fx:id="korhinta" layoutY="1.0" mnemonicParsing="false" prefHeight="200.0" prefWidth="200.0" text="Körhinta" />
+         </children>
+      </Pane>
+      <Pane layoutX="289.0" layoutY="106.0" prefHeight="200.0" prefWidth="200.0">
+         <children>
+            <Button id="hullamvasut" fx:id="hullamvasut" layoutX="1.0" layoutY="-3.0" mnemonicParsing="false" prefHeight="112.0" prefWidth="130.0" text="Hullámvasút" />
+         </children>
+      </Pane>
+      <Pane layoutX="521.0" layoutY="346.0" prefHeight="200.0" prefWidth="200.0">
+         <children>
+            <Button id="vattacukros" fx:id="vattacukros" mnemonicParsing="false" prefHeight="200.0" prefWidth="200.0" text="Vattacukros" />
+         </children>
+      </Pane>
+      <Pane layoutX="574.0" layoutY="106.0" prefHeight="200.0" prefWidth="200.0">
+         <children>
+            <Button id="szellemvasut" fx:id="szellemvasut" layoutY="1.0" mnemonicParsing="false" prefHeight="200.0" prefWidth="200.0" text="Szellemvasút" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
