@@ -6,4 +6,13 @@ public class Karbantarto extends Szemelyzet {
     public Karbantarto(String nev){
         super(nev);
     }
+
+
+    public void setFizetes(int fizetes) {
+        if (fizetes >= 0){
+            this.fizetes = fizetes;
+        } else {
+            this.fizetes = 0;
+        }
+    }
 }

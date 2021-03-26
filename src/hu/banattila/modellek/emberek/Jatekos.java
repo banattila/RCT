@@ -9,7 +9,7 @@ import java.util.Set;
 
 public class Jatekos {
     private String nev;
-    private long penz;
+    private double penz;
     private Set<Epuletek> epuletek;
     private List<Karbantarto> karbantartok;
     private Konyvelo konyvelo;
@@ -48,11 +48,11 @@ public class Jatekos {
         this.nev = nev;
     }
 
-    public long getPenz() {
+    public double getPenz() {
         return penz;
     }
 
-    public void setPenz(long penz) {
+    public void setPenz(double penz) {
         this.penz = penz;
     }
 
@@ -69,7 +69,7 @@ public class Jatekos {
     }
 
     public void setKarbantartok(Karbantarto karbantarto) throws MaxSzemelyzetSzam{
-        if (this.karbantartok.size() < 3){
+        if (this.karbantartok.size() < 5){
             this.karbantartok.add(karbantarto);
         } else {
             throw new MaxSzemelyzetSzam("karbantarto");
