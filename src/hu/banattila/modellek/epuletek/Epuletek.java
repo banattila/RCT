@@ -5,7 +5,7 @@ import hu.banattila.kivetelek.NincsElegPenz;
 import hu.banattila.modellek.JatekSzintek;
 import hu.banattila.modellek.emberek.Jatekos;
 
-public abstract class Epuletek implements Epul{
+public abstract class Epuletek implements Epul {
     private final int MAX_SZINT = 10;
     private final int ALAP_NYERESEG_LATOGATONKENT;
     private final String nev;
@@ -13,13 +13,19 @@ public abstract class Epuletek implements Epul{
     private int nyeresegLatogatonkent;
     private double fejlesztesKoltseg;
 
-    public Epuletek(String nev, int alap, JatekSzintek jatekSzintek){
+    public Epuletek(String nev, int alap, JatekSzintek jatekSzintek) {
         this.nev = nev;
         this.szint = 0;
-        switch (jatekSzintek){
-            case KONNYU: alap = alap; break;
-            case KOZEPES: alap = alap / 2; break;
-            case NEHEZ: alap = alap / 4; break;
+        switch (jatekSzintek) {
+            case KONNYU:
+                alap = alap;
+                break;
+            case KOZEPES:
+                alap = alap / 2;
+                break;
+            case NEHEZ:
+                alap = alap / 4;
+                break;
         }
         this.ALAP_NYERESEG_LATOGATONKENT = alap;
     }
@@ -36,41 +42,41 @@ public abstract class Epuletek implements Epul{
         }
     }
 
-   @Override
+    @Override
     public String fejleszt(Jatekos jatekos) throws NincsElegPenz {
 
         String eredmeny = "";
         boolean penzEllenorzes = false;
 
-        try{
+        try {
             penzEllenorzes = tranzakcioEllenorzes(jatekos.getPenz());
-        } catch (NincsElegPenz e){
+        } catch (NincsElegPenz e) {
             return e.getMessage();
         }
 
-        if(penzEllenorzes){
+        if (penzEllenorzes) {
             try {
                 this.setSzint(this.getSzint() + 1);
-            } catch (MaximumEpuletSzint e){
+            } catch (MaximumEpuletSzint e) {
                 return e.getMessage();
             }
             eredmeny = "Fejlesztés sikeres!";
             this.setFejlesztesKoltseg(this.getFejlesztesKoltseg() * 2);
-        } else if (jatekos.getPenz() - this.getFejlesztesKoltseg() < 0){
+        } else if (jatekos.getPenz() - this.getFejlesztesKoltseg() < 0) {
         }
         jatekos.setPenz(jatekos.getPenz() - this.getFejlesztesKoltseg());
         return eredmeny;
-   }
+    }
 
-   private boolean tranzakcioEllenorzes(double jatekosPenze) throws NincsElegPenz{
-        if (jatekosPenze > this.getFejlesztesKoltseg()){
+    private boolean tranzakcioEllenorzes(double jatekosPenze) throws NincsElegPenz {
+        if (jatekosPenze > this.getFejlesztesKoltseg()) {
             return true;
         } else {
             throw new NincsElegPenz(this.getNev()
                     + " fejlesztéséhez nincs elegendő pénz. A hiányzó pénz: "
                     + Math.abs(jatekosPenze - this.getFejlesztesKoltseg()));
         }
-   }
+    }
 
     public String getNev() {
         return nev;
@@ -80,8 +86,8 @@ public abstract class Epuletek implements Epul{
         return szint;
     }
 
-    public void setSzint(int szint) throws MaximumEpuletSzint{
-        if (szint <= MAX_SZINT){
+    public void setSzint(int szint) throws MaximumEpuletSzint {
+        if (szint <= MAX_SZINT) {
             this.szint = szint;
         } else {
             throw new MaximumEpuletSzint(this.getNev());

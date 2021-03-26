@@ -9,7 +9,7 @@ public enum Balesetek {
 
     private final String nev;
 
-    private Balesetek(String nev){
+    private Balesetek(String nev) {
         this.nev = nev;
     }
 }

@@ -9,7 +9,7 @@ public class Baleset {
     private double kiadas;
     private double latogatoCsokkenes;
 
-    public Baleset(Balesetek balesetek, JatekSzintek szint){
+    public Baleset(Balesetek balesetek, JatekSzintek szint) {
         this.nev = balesetek.name();
         this.szint = szint;
         this.kiadas = 0;

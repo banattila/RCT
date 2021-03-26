@@ -24,7 +24,8 @@ public class VidamParkKontroller {
     @FXML
     private Label csonakazoSzint;
 
-    public VidamParkKontroller(){}
+    public VidamParkKontroller() {
+    }
 
 
 }

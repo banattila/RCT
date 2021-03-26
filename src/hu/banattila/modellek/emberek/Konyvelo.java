@@ -2,7 +2,6 @@ package hu.banattila.modellek.emberek;
 
 public class Konyvelo extends Szemelyzet {
 
-    private double fizetes;
     private static Konyvelo konyvelo;
 
     private Konyvelo(String nev) {
@@ -10,8 +9,13 @@ public class Konyvelo extends Szemelyzet {
         this.fizetes = 0;
     }
 
+    @Override
     public void setFizetes(double napiToke) {
         this.fizetes = napiToke * 0.02;
+    }
+
+    public double getFizetes(){
+        return this.fizetes;
     }
 
     public static Konyvelo konyvelotAlkalmaz(String kit) {

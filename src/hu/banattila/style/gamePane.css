@@ -1,7 +1,8 @@
 .btn {
     -fx-background-image: url("../imgs/meh2.jpeg");
 }
-.button{
+
+.button {
     -fx-pref-width: 130;
     -fx-pref-height: 130;
 }
