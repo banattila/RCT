@@ -1,12 +1,11 @@
 package hu.banattila.modellek.jatekok;
 
+import hu.banattila.enumok.JatekSzintek;
 import hu.banattila.kivetelek.MaximumJatekSzint;
 import hu.banattila.kivetelek.NincsElegPenz;
-import hu.banattila.enumok.JatekSzintek;
 import hu.banattila.modellek.emberek.Jatekos;
 
 public abstract class Jatekok implements Fejleszt {
-    private final int MAX_SZINT = 10;
     private final int ALAP_NYERESEG_LATOGATONKENT;
     private final String nev;
     private int szint;
@@ -91,7 +90,8 @@ public abstract class Jatekok implements Fejleszt {
     }
 
     public void setSzint(int szint) throws MaximumJatekSzint {
-        if (szint <= MAX_SZINT) {
+        int maxSzint = 10;
+        if (szint <= maxSzint) {
             this.szint = szint;
         } else {
             throw new MaximumJatekSzint(this.getNev());

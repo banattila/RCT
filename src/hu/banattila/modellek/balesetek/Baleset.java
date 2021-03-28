@@ -2,40 +2,39 @@ package hu.banattila.modellek.balesetek;
 
 import hu.banattila.enumok.JatekSzintek;
 
-public class Baleset {
+public abstract class Baleset {
 
-    private String nev;
-    private JatekSzintek szint;
-    private double kiadas;
-    private double latogatoCsokkenes;
+    private final String nev;
+    private int kiadas;
+    private final int latogatoCsokkenes;
+    private final double esely;
 
-    public Baleset(Balesetek balesetek, JatekSzintek szint) {
-        this.nev = balesetek.name();
-        this.szint = szint;
-        this.kiadas = 0;
+    public Baleset(String nev, JatekSzintek szint,int kiadas,  int latogatoCsokkenes, double esely) {
+        this.nev = nev;
+        this.kiadas = kiadas;
+        this.latogatoCsokkenes = latogatoCsokkenes;
+
+        switch (szint){
+            case KONNYU: break;
+            case KOZEPES: esely *= 1.5; break;
+            case NEHEZ: esely *= 2; break;
+        }
+        this.esely = esely;
     }
 
     public String getNev() {
         return nev;
     }
 
-    public void setNev(String nev) {
-        this.nev = nev;
-    }
-
-    public JatekSzintek getSzint() {
-        return szint;
-    }
-
-    public void setSzint(JatekSzintek szint) {
-        this.szint = szint;
-    }
-
-    public double getKiadas() {
+    public int getKiadas() {
         return kiadas;
     }
 
-    public void setKiadas(double kiadas) {
-        this.kiadas = kiadas;
+    public int getLatogatoCsokkenes() {
+        return latogatoCsokkenes;
+    }
+
+    public double getEsely() {
+        return esely;
     }
 }

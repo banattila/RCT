@@ -3,31 +3,28 @@ package hu.banattila.jatek;
 import hu.banattila.enumok.JatekSzintek;
 import hu.banattila.modellek.balesetek.Baleset;
 import hu.banattila.modellek.emberek.Jatekos;
-import hu.banattila.modellek.emberek.Szemelyzet;
-import hu.banattila.modellek.jatekok.Jatekok;
-import hu.banattila.modellek.reklamok.Reklamok;
 
-import java.util.Random;
 import java.util.Set;
 
 public class Jatek {
 
-    private Jatekos jatekos;
+    private final Jatekos jatekos;
     private static int elteltNapok;
-    private Set<Baleset> balesetek;
+    private final Set<Baleset> balesetek;
     private final JatekSzintek szint;
-    private int napiLatogatok;
-    private int varhatoBevetel;
-    private int varhatoKiadas;
+    private static int napiLatogatok;
+    private static int varhatoBevetel;
+    private static int varhatoKiadas;
     private String uzenet;
 
     public Jatek(String jatekosNev, JatekSzintek szint){
         this.szint = szint;
         this.jatekos = new Jatekos(jatekosNev, szint);
         this.balesetek = BalesetekInit.createBalesetek(szint);
-        this.napiLatogatok = 10;
-        this.varhatoBevetel = 0;
-        this.varhatoKiadas = 0;
+        napiLatogatok = 10;
+        varhatoBevetel = 0;
+        varhatoKiadas = 0;
+        elteltNapok = 1;
     }
 
     // majd a mentések betöltéséhez fog kelleni, de kiegészítve több mindennel, csak el ne felejtsem:)
@@ -36,71 +33,27 @@ public class Jatek {
     }
 */
     private void napEltelik(){
-        this.varhatoKiadas = 0;
         elteltNapok++;
-        System.out.println("------------------ A várható napi bevétel: " + this.varhatoBevetel);
-        karbantartoHatekonysag();
-        this.varhatoKiadas += karbantartoFizetes();
-        this.varhatoKiadas += konyveloFizetes();
-        System.out.println("------------------ A várható napi kiadás: " + this.varhatoKiadas);
-        this.jatekos.setPenz(this.getJatekos().getPenz() + this.varhatoBevetel - this.varhatoKiadas);
+        bevetelKalk();
+        kiadasok();
+        this.jatekos.setPenz(this.getJatekos().getPenz() + varhatoBevetel - varhatoKiadas);
+        System.out.println("------------------ A várható napi bevétel: " + varhatoBevetel);
+        System.out.println("------------------ A várható napi kiadás: " + varhatoKiadas);
         System.out.println("------------------- A napnak vége lett ------------------------------------");
         System.out.println("------------------- A napnak vége lett ------------------------------------");
         System.out.println("------------------- A napnak vége lett ------------------------------------");
-        latogatokKalk();
-        this.varhatoBevetel = bevetelKalk();
-
     }
 
-    private int konyveloFizetes(){
-        if (jatekos.getKonyvelo() != null){
-            jatekos.getKonyvelo().setFizetes(this.varhatoBevetel);
-            return jatekos.getKonyvelo().getFizetes();
-        }
-        return 0;
+    private void bevetelKalk() {
+        NapiKalkulator.bevetelKalk(getJatekos().getReklamok(), getJatekos().getJatekok());
     }
 
-    private void karbantartoHatekonysag(){
-        this.jatekos.getKarbantartok()
-                .forEach(it ->{
-                    int esely = new Random().nextInt(3);
-                    it.setEselyCsokkentesre(esely);
-                });
-    }
-
-    private double karbantartoFizetes(){
-        this.jatekos.getKarbantartok()
-                .forEach(it ->
-                        it.setFizetes(it.getEselyCsokkentesre() * this.varhatoBevetel / 100));
-        return this.getJatekos().getKarbantartok()
-                .stream().map(Szemelyzet::getFizetes).reduce(0, Integer::sum);
-    }
-
-    private int bevetelKalk(){
-        Integer bevetel = this.jatekos.getJatekok()
-                .stream()
-                .map(Jatekok::getNyeresegLatogatonkent)
-                .reduce(0, Integer::sum);
-
-        return bevetel * napiLatogatok;
-    }
-
-    private int kiadasKalk(){
-        int kiadas = 0;
-
-        return kiadas;
-    }
-
-
-    private void latogatokKalk(){
-
-        getJatekos().getReklamok()
-                .forEach(it -> this.napiLatogatok += it.ervennyesseg());
+    private void kiadasok(){
+        NapiKalkulator.kiadasok(getJatekos().getKonyvelo(), getJatekos().getKarbantartok());
     }
 
     public void napVege(){
         napEltelik();
-
     }
 
     public void jatekosReklamoz(String mit){
@@ -135,10 +88,34 @@ public class Jatek {
         this.uzenet = uzenet;
     }
 
+    public static int getNapiLatogatok() {
+        return napiLatogatok;
+    }
+
+    public static void setNapiLatogatok(int napiLatogatok) {
+        Jatek.napiLatogatok = napiLatogatok;
+    }
+
+    public static int getVarhatoBevetel() {
+        return varhatoBevetel;
+    }
+
+    public static void setVarhatoBevetel(int varhatoBevetel) {
+        Jatek.varhatoBevetel = varhatoBevetel;
+    }
+
+    public static int getVarhatoKiadas() {
+        return varhatoKiadas;
+    }
+
+    public static void setVarhatoKiadas(int varhatoKiadas) {
+        Jatek.varhatoKiadas = varhatoKiadas;
+    }
+
     @Override
     public String toString(){
-        return "Ez a játék " + elteltNapok + "-ik napja. A játék szintje: " + this.getSzint() + ". A napi látogatók száma: "
-                + this.napiLatogatok + ". A várható bevétel: " + this.varhatoBevetel + ", illetve a kiadás: " + this.varhatoKiadas
+        return "Ez a játék " + getElteltNapok() + "-ik napja. A játék szintje: " + this.getSzint() + ". A napi látogatók száma: "
+                + napiLatogatok + ". A várható bevétel: " + varhatoBevetel + ", illetve a kiadás: " + varhatoKiadas
                 + "\n" + this.getJatekos();
     }
 }

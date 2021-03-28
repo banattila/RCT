@@ -1,7 +1,7 @@
 package hu.banattila.modellek.emberek;
 
-import hu.banattila.kivetelek.MaxSzemelyzetSzam;
 import hu.banattila.enumok.JatekSzintek;
+import hu.banattila.kivetelek.MaxSzemelyzetSzam;
 import hu.banattila.modellek.jatekok.Jatekok;
 import hu.banattila.modellek.reklamok.Reklamok;
 
@@ -16,23 +16,13 @@ public final class Jatekos {
     private final List<Karbantarto> karbantartok;
     private Konyvelo konyvelo;
     private final Set<Reklamok> reklamok;
-    private final JatekSzintek szint;
 
     public Jatekos(String nev, JatekSzintek szint) {
         this.nev = nev;
-        this.szint = szint;
         this.penz = 150000;
-        this.jatekok = ListaFactory.initJatekok(this.szint);
+        this.jatekok = ListaFactory.initJatekok(szint);
         this.karbantartok = new ArrayList<>();
-        this.reklamok = ListaFactory.initReklamok(this.szint);
-    }
-
-    public void alkalmaz(Szemelyzet szemely) throws MaxSzemelyzetSzam {
-        if (szemely instanceof Karbantarto) {
-            setKarbantartok((Karbantarto) szemely);
-        } else {
-            setKonyvelo((Konyvelo) szemely);
-        }
+        this.reklamok = ListaFactory.initReklamok(szint);
     }
 
     public void kirug(Szemelyzet szemely) {
@@ -65,6 +55,7 @@ public final class Jatekos {
     public Set<Reklamok> getReklamok(){
         return this.reklamok;
     }
+
     public String getNev() {
         return nev;
     }
@@ -89,7 +80,15 @@ public final class Jatekos {
         return karbantartok;
     }
 
-    public void setKarbantartok(Karbantarto karbantarto) throws MaxSzemelyzetSzam {
+    public void alkalmaz(Szemelyzet szemely) throws MaxSzemelyzetSzam {
+        if (szemely instanceof Karbantarto) {
+            karbantartoFelvetel((Karbantarto) szemely);
+        } else {
+            setKonyvelo((Konyvelo) szemely);
+        }
+    }
+
+    private void karbantartoFelvetel(Karbantarto karbantarto) throws MaxSzemelyzetSzam {
         if (this.karbantartok.size() < 5) {
             this.karbantartok.add(karbantarto);
         } else {
@@ -101,7 +100,7 @@ public final class Jatekos {
         return konyvelo;
     }
 
-    public void setKonyvelo(Konyvelo konyvelo) throws MaxSzemelyzetSzam {
+    private void setKonyvelo(Konyvelo konyvelo) throws MaxSzemelyzetSzam {
         if (this.konyvelo == null) {
             this.konyvelo = konyvelo;
         } else {
@@ -116,15 +115,13 @@ public final class Jatekos {
                 .append(getNev())
                 .append(" akinek ")
                 .append(getPenz())
-                .append(" fabatkája van.\n\n");
-/*
+                .append(" fabatkája van.\n\n")
                 .append("Játékai:\n\n");
         this.getJatekok().forEach(
                 it -> {
                     sb.append(it);
                     sb.append("\n");
                 });
-*/
 
         sb.append("Reklámjai:\n\n");
         this.reklamok.forEach(
@@ -132,7 +129,7 @@ public final class Jatekos {
                     sb.append(it);
                     sb.append("\n");
                 }
-        );/*
+        );
         sb.append("Alkalmazottai:\n");
         sb.append((this.konyvelo == null)?"":this.konyvelo + "\n");
         this.karbantartok.forEach(
@@ -141,7 +138,7 @@ public final class Jatekos {
                     sb.append("\n");
                 }
         );
-        sb.append((this.konyvelo == null && this.karbantartok.size() == 0)?"Nincsenek alkalmazottai.":"");*/
+        sb.append((this.konyvelo == null && this.karbantartok.size() == 0)?"Nincsenek alkalmazottai.":"");
         return sb.toString();
     }
 }

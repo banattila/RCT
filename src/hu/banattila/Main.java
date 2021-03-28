@@ -1,11 +1,12 @@
 package hu.banattila;
 
 import hu.banattila.enumok.JatekNevek;
+import hu.banattila.enumok.JatekSzintek;
 import hu.banattila.enumok.ReklamNevek;
 import hu.banattila.jatek.Jatek;
-import hu.banattila.enumok.JatekSzintek;
 import hu.banattila.kivetelek.MaxSzemelyzetSzam;
 import hu.banattila.modellek.emberek.Karbantarto;
+import hu.banattila.modellek.emberek.Konyvelo;
 
 public class Main {
 
@@ -32,6 +33,16 @@ public class Main {
         } catch (MaxSzemelyzetSzam e) {
             jatek.setUzenet(e.getMessage());
         }
+
+
+        try {
+            jatek.getJatekos().alkalmaz(Konyvelo.konyvelotAlkalmaz("Jansi"));
+        } catch (MaxSzemelyzetSzam e){
+            jatek.setUzenet(e.getMessage());
+        }
+        System.out.println(jatek.getUzenet());
+        jatek.setUzenet("");
+
         jatek.napVege();
         System.out.println(jatek.getUzenet());
         jatek.setUzenet("");
@@ -46,7 +57,7 @@ public class Main {
         jatek.setUzenet("");
         System.out.println(jatek);
         jatek.napVege();
-
+        jatek.getJatekos().kirug(jatek.getJatekos().getKarbantartok().get(0));
         System.out.println(jatek);
         jatek.setUzenet("");
         System.out.println("-----------------------");

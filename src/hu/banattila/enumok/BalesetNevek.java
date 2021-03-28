@@ -1,6 +1,6 @@
-package hu.banattila.modellek.balesetek;
+package hu.banattila.enumok;
 
-public enum Balesetek {
+public enum BalesetNevek {
     ROSSZ_VATTA("Rossz ízű volt a vattacukor!"),
     SZETESIK("Szétesett a körhinta!"),
     ELSULLYED("Elsüllyedt a csónakod!"),
@@ -9,7 +9,7 @@ public enum Balesetek {
 
     private final String nev;
 
-    private Balesetek(String nev) {
+    BalesetNevek(String nev) {
         this.nev = nev;
     }
 }

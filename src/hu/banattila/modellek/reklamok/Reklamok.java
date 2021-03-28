@@ -111,7 +111,7 @@ public abstract class Reklamok {
         sb.append(getNev())
                 .append("-t maximum ")
                 .append(getIdoTartam())
-                .append(" napra tudod alkalmazni.")
+                .append(" napra tudod alkalmazni. ")
                 .append(getUjLatogatokNaponta() + " új látogatót tud hozni naponta. \tJelenleg")
                 .append((megrendelve) ? " meg van rendelve " + getHanyadikNapja() + " napja." : " nincs megrendelve.");
 
