@@ -1,8 +1,8 @@
 package hu.banattila.modellek.emberek;
 
 import hu.banattila.kivetelek.MaxSzemelyzetSzam;
-import hu.banattila.modellek.JatekSzintek;
-import hu.banattila.modellek.epuletek.Epuletek;
+import hu.banattila.enumok.JatekSzintek;
+import hu.banattila.modellek.jatekok.Jatekok;
 import hu.banattila.modellek.reklamok.Reklamok;
 
 import java.util.ArrayList;
@@ -11,8 +11,8 @@ import java.util.Set;
 
 public final class Jatekos {
     private String nev;
-    private double penz;
-    private final Set<Epuletek> epuletek;
+    private int penz;
+    private final Set<Jatekok> jatekok;
     private final List<Karbantarto> karbantartok;
     private Konyvelo konyvelo;
     private final Set<Reklamok> reklamok;
@@ -22,9 +22,9 @@ public final class Jatekos {
         this.nev = nev;
         this.szint = szint;
         this.penz = 150000;
-        this.epuletek = InitListak.initEpuletek(this.szint);
+        this.jatekok = ListaFactory.initJatekok(this.szint);
         this.karbantartok = new ArrayList<>();
-        this.reklamok = InitListak.initReklamok(this.szint);
+        this.reklamok = ListaFactory.initReklamok(this.szint);
     }
 
     public void alkalmaz(Szemelyzet szemely) throws MaxSzemelyzetSzam {
@@ -43,6 +43,28 @@ public final class Jatekos {
         }
     }
 
+    public String fejlesztes(String mit){
+        Jatekok jatek = this.jatekok.stream().filter(it -> it.getNev().equals(mit)).findFirst().get();
+         return jatek.fejleszt(this);
+    }
+
+    public String reklamoz(String mit)  {
+        Reklamok reklam = this.reklamok.stream()
+                .filter(it -> it.getNev().equals(mit))
+                .findFirst()
+                .get();
+
+        if (reklam.isMegrendelve()){
+            return reklam.getNev() + " már meg van rendelve " + reklam.getHanyadikNapja() + " napja.";
+        }
+
+        reklam.megrendel();
+        return "Sikeresen megrendelted a " + reklam.getNev() + " -ot " + reklam.getIdoTartam() + " napra";
+    }
+
+    public Set<Reklamok> getReklamok(){
+        return this.reklamok;
+    }
     public String getNev() {
         return nev;
     }
@@ -51,16 +73,16 @@ public final class Jatekos {
         this.nev = nev;
     }
 
-    public double getPenz() {
+    public int getPenz() {
         return penz;
     }
 
-    public void setPenz(double penz) {
+    public void setPenz(int penz) {
         this.penz = penz;
     }
 
-    public Set<Epuletek> getEpuletek() {
-        return epuletek;
+    public Set<Jatekok> getJatekok() {
+        return jatekok;
     }
 
     public List<Karbantarto> getKarbantartok() {
@@ -87,25 +109,6 @@ public final class Jatekos {
         }
     }
 
-    public void fejlesztes(String mit){
-        Epuletek epulet = this.epuletek.stream().filter(it -> it.getNev().equals(mit)).findFirst().get();
-        epulet.fejleszt(this);
-    }
-
-    public String reklamoz(String mit)  {
-        Reklamok reklam = this.reklamok.stream()
-                .filter(it -> it.getNev().equals(mit))
-                .findFirst()
-                .get();
-
-        if (reklam.isMegrendelve()){
-            return reklam.getNev() + " már meg van rendelve " + reklam.getHanyadikNapja() + ".";
-        }
-
-        reklam.megrendel();
-        return "Sikeresen megrendelted a " + reklam.getNev() + " -ot " + reklam.ervennyesseg() + " napra";
-    }
-
     @Override
     public String toString(){
         StringBuilder sb = new StringBuilder();
@@ -114,8 +117,8 @@ public final class Jatekos {
                 .append(" akinek ")
                 .append(getPenz())
                 .append(" fabatkája van.\n\n")
-                .append("Epuletei:\n\n");
-        this.getEpuletek().forEach(
+                .append("Játékai:\n\n");
+        this.getJatekok().forEach(
                 it -> {
                     sb.append(it);
                     sb.append("\n");
@@ -128,7 +131,7 @@ public final class Jatekos {
                     sb.append("\n");
                 }
         );
-        sb.append("Alkalmazottai: ");
+        sb.append("Alkalmazottai:\n");
         sb.append((this.konyvelo == null)?"":this.konyvelo + "\n");
         this.karbantartok.forEach(
                 it -> {
@@ -136,6 +139,7 @@ public final class Jatekos {
                     sb.append("\n");
                 }
         );
+        sb.append((this.konyvelo == null && this.karbantartok.size() == 0)?"Nincsenek alkalmazottai.":"");
         return sb.toString();
     }
 }

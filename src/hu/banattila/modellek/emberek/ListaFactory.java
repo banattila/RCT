@@ -1,13 +1,13 @@
 package hu.banattila.modellek.emberek;
 
-import hu.banattila.modellek.JatekSzintek;
-import hu.banattila.modellek.epuletek.*;
+import hu.banattila.enumok.JatekSzintek;
+import hu.banattila.modellek.jatekok.*;
 import hu.banattila.modellek.reklamok.*;
 
 import java.util.HashSet;
 import java.util.Set;
 
-public class InitListak {
+public class ListaFactory {
 
     protected static Set<Reklamok> initReklamok(JatekSzintek szint){
         Set<Reklamok> reklamok = new HashSet<>();
@@ -19,13 +19,13 @@ public class InitListak {
         return reklamok;
     }
 
-    protected static Set<Epuletek> initEpuletek(JatekSzintek szint){
-        Set<Epuletek> epuletek = new HashSet<>();
-        epuletek.add(new VattaCukros(szint));
-        epuletek.add(new Korhinta(szint));
-        epuletek.add(new Csonakazo(szint));
-        epuletek.add(new Szellemvasut(szint));
-        epuletek.add(new HullamVasut(szint));
-        return epuletek;
+    protected static Set<Jatekok> initJatekok(JatekSzintek szint){
+        Set<Jatekok> jatekok = new HashSet<>();
+        jatekok.add(new VattaCukros(szint));
+        jatekok.add(new Korhinta(szint));
+        jatekok.add(new Csonakazo(szint));
+        jatekok.add(new Szellemvasut(szint));
+        jatekok.add(new HullamVasut(szint));
+        return jatekok;
     }
 }

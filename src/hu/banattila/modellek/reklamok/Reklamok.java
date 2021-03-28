@@ -1,6 +1,6 @@
 package hu.banattila.modellek.reklamok;
 
-import hu.banattila.modellek.JatekSzintek;
+import hu.banattila.enumok.JatekSzintek;
 
 public abstract class Reklamok {
 
@@ -18,6 +18,7 @@ public abstract class Reklamok {
         this.idoTartam = idoTartam;
         this.megrendelve = false;
         init(jatekSzintek, koltseg, ujLatogatokNaponta);
+        this.hatasfok = 100.0;
     }
 
     private void init(JatekSzintek jatekSzintek, double koltseg, int ujLatogatokNaponta) {
@@ -40,16 +41,15 @@ public abstract class Reklamok {
         }
     }
 
-    public boolean ervennyesseg() {
+    public void ervennyesseg() {
         boolean eredmeny = this.idoTartam > this.hanyadikNapja;
-        if (!eredmeny || !megrendelve) {
+        if (eredmeny && !megrendelve) {
             this.hanyadikNapja = 0;
             this.megrendelve = false;
-        } else if (eredmeny && megrendelve) {
+        } else if(megrendelve){
             incHanyadikNapja();
-            setHatasfok();
         }
-        return eredmeny;
+        setHatasfok();
     }
 
     private void incHanyadikNapja() {
@@ -57,11 +57,11 @@ public abstract class Reklamok {
     }
 
     private void setUjLatogatokNaponta() {
-        this.ujLatogatokNaponta *= this.hatasfok;
+        this.ujLatogatokNaponta = (int)(getUjLatogatokNaponta() * this.hatasfok / 100);
     }
 
     private void checkHatasfok(double hatasfok) {
-        if (hatasfok > 100) {
+        if (hatasfok < 100) {
             this.hatasfok = hatasfok;
         } else {
             this.hatasfok = 100;
@@ -93,7 +93,7 @@ public abstract class Reklamok {
         return this.ujLatogatokNaponta;
     }
 
-    public int getHanyadikNapja(){
+    public int getHanyadikNapja() {
         return this.hanyadikNapja;
     }
 
@@ -101,19 +101,23 @@ public abstract class Reklamok {
         return this.koltseg;
     }
 
-    public int getIdoTartam(){
+    public int getIdoTartam() {
         return this.idoTartam;
     }
 
+    public double getHatasfok() {
+        return this.hatasfok;
+    }
+
     @Override
-    public String toString(){
+    public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(getNev())
                 .append("-t maximum ")
                 .append(getIdoTartam())
                 .append(" napra tudod alkalmazni.")
-                .append(" Jelenleg ")
-                .append((megrendelve)?"meg van rendelve " + getHanyadikNapja() + " napja.":"nincs megrendelve");
+                .append(getUjLatogatokNaponta() + " új látogatót tud hozni naponta. \tJelenleg")
+                .append((megrendelve) ? " meg van rendelve " + getHanyadikNapja() + " napja." : " nincs megrendelve.");
 
         return sb.toString();
     }

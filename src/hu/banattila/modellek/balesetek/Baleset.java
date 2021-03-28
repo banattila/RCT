@@ -1,6 +1,6 @@
 package hu.banattila.modellek.balesetek;
 
-import hu.banattila.modellek.JatekSzintek;
+import hu.banattila.enumok.JatekSzintek;
 
 public class Baleset {
 

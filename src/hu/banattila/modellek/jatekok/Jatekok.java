@@ -1,20 +1,20 @@
-package hu.banattila.modellek.epuletek;
+package hu.banattila.modellek.jatekok;
 
-import hu.banattila.kivetelek.MaximumEpuletSzint;
+import hu.banattila.kivetelek.MaximumJatekSzint;
 import hu.banattila.kivetelek.NincsElegPenz;
-import hu.banattila.modellek.JatekSzintek;
+import hu.banattila.enumok.JatekSzintek;
 import hu.banattila.modellek.emberek.Jatekos;
 
-public abstract class Epuletek implements Epul {
+public abstract class Jatekok implements Fejleszt {
     private final int MAX_SZINT = 10;
     private final int ALAP_NYERESEG_LATOGATONKENT;
     private final String nev;
     private int szint;
-    private double nyeresegLatogatonkent;
-    private double fejlesztesKoltseg;
+    private int nyeresegLatogatonkent;
+    private int fejlesztesKoltseg;
 
 
-    public Epuletek(String nev, int alap, JatekSzintek jatekSzintek) {
+    public Jatekok(String nev, int alap, JatekSzintek jatekSzintek) {
         this.nev = nev;
         this.szint = 0;
         switch (jatekSzintek) {
@@ -31,7 +31,7 @@ public abstract class Epuletek implements Epul {
         setNyeresegLatogatonkent(alap);
     }
 
-    protected void initKoltseg(JatekSzintek jatekSzint, double konnyu, double kozepes, double nehez) {
+    protected void initKoltseg(JatekSzintek jatekSzint, int konnyu, int kozepes, int nehez) {
         switch (jatekSzint) {
             case KONNYU:
                 setFejlesztesKoltseg(konnyu);
@@ -58,7 +58,7 @@ public abstract class Epuletek implements Epul {
         if (penzEllenorzes) {
             try {
                 this.setSzint(this.getSzint() + 1);
-            } catch (MaximumEpuletSzint e) {
+            } catch (MaximumJatekSzint e) {
                 return e.getMessage();
             }
             if (this.getSzint() > 0){
@@ -90,27 +90,27 @@ public abstract class Epuletek implements Epul {
         return szint;
     }
 
-    public void setSzint(int szint) throws MaximumEpuletSzint {
+    public void setSzint(int szint) throws MaximumJatekSzint {
         if (szint <= MAX_SZINT) {
             this.szint = szint;
         } else {
-            throw new MaximumEpuletSzint(this.getNev());
+            throw new MaximumJatekSzint(this.getNev());
         }
     }
 
-    public double getNyeresegLatogatonkent() {
+    public int getNyeresegLatogatonkent() {
         return this.nyeresegLatogatonkent;
     }
 
-    public void setNyeresegLatogatonkent(double nyeresegLatogatonkent) {
+    public void setNyeresegLatogatonkent(int nyeresegLatogatonkent) {
         this.nyeresegLatogatonkent = nyeresegLatogatonkent;
     }
 
-    public double getFejlesztesKoltseg() {
+    public int getFejlesztesKoltseg() {
         return this.fejlesztesKoltseg;
     }
 
-    public void setFejlesztesKoltseg(double fejlesztesKoltseg) {
+    public void setFejlesztesKoltseg(int fejlesztesKoltseg) {
         this.fejlesztesKoltseg = fejlesztesKoltseg;
     }
 

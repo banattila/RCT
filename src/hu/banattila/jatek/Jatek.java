@@ -1,9 +1,11 @@
 package hu.banattila.jatek;
 
-import hu.banattila.modellek.JatekSzintek;
+import hu.banattila.enumok.JatekSzintek;
 import hu.banattila.modellek.balesetek.Baleset;
 import hu.banattila.modellek.emberek.Jatekos;
-import hu.banattila.modellek.epuletek.Epuletek;
+import hu.banattila.modellek.emberek.Szemelyzet;
+import hu.banattila.modellek.jatekok.Jatekok;
+import hu.banattila.modellek.reklamok.Reklamok;
 
 import java.util.Random;
 import java.util.Set;
@@ -15,14 +17,15 @@ public class Jatek {
     private Set<Baleset> balesetek;
     private final JatekSzintek szint;
     private int napiLatogatok;
-    private double varhatoBevetel;
-    private double varhatoKiadas;
+    private int varhatoBevetel;
+    private int varhatoKiadas;
+    private String uzenet;
 
     public Jatek(String jatekosNev, JatekSzintek szint){
         this.szint = szint;
         this.jatekos = new Jatekos(jatekosNev, szint);
         this.balesetek = BalesetekInit.createBalesetek(szint);
-        napiLatogatok = 10;
+        this.napiLatogatok = 10;
         this.varhatoBevetel = 0;
         this.varhatoKiadas = 0;
     }
@@ -33,14 +36,22 @@ public class Jatek {
     }
 */
     private void napEltelik(){
+        this.varhatoKiadas = 0;
         elteltNapok++;
-        this.varhatoBevetel = bevetelKalk();
+        System.out.println("------------------ A várható napi bevétel: " + this.varhatoBevetel);
         karbantartoHatekonysag();
-        karbantartoFizetes();
-        konyveloFizetes();
+        this.varhatoKiadas += karbantartoFizetes();
+        this.varhatoKiadas += konyveloFizetes();
+        System.out.println("------------------ A várható napi kiadás: " + this.varhatoKiadas);
+        this.jatekos.setPenz(this.getJatekos().getPenz() + this.varhatoBevetel - this.varhatoKiadas);
+        System.out.println("------------------- A napnak vége lett ------------------------------------");
+        checkReklamok();
+        latogatokKalk();
+        this.varhatoBevetel = bevetelKalk();
+
     }
 
-    private double konyveloFizetes(){
+    private int konyveloFizetes(){
         if (jatekos.getKonyvelo() != null){
             jatekos.getKonyvelo().setFizetes(this.varhatoBevetel);
             return jatekos.getKonyvelo().getFizetes();
@@ -51,42 +62,59 @@ public class Jatek {
     private void karbantartoHatekonysag(){
         this.jatekos.getKarbantartok()
                 .forEach(it ->{
-                    double esely = 3 *  new Random().nextDouble();
+                    int esely = new Random().nextInt(3);
                     it.setEselyCsokkentesre(esely);
                 });
     }
 
-    private void karbantartoFizetes(){
+    private double karbantartoFizetes(){
         this.jatekos.getKarbantartok()
                 .forEach(it ->
-                        it.setFizetes(it.getEselyCsokkentesre() * this.varhatoBevetel));
+                        it.setFizetes(it.getEselyCsokkentesre() * this.varhatoBevetel / 100));
+        return this.getJatekos().getKarbantartok()
+                .stream().map(Szemelyzet::getFizetes).reduce(0, Integer::sum);
     }
 
-    private double bevetelKalk(){
-        Double bevetel = this.jatekos.getEpuletek()
+    private int bevetelKalk(){
+        Integer bevetel = this.jatekos.getJatekok()
                 .stream()
-                .map(Epuletek::getNyeresegLatogatonkent)
-                .reduce(0.0, Double::sum);
-
-        jatekos.getKarbantartok().stream()
-                .forEach(it -> it.setFizetes(bevetel * it.getEselyCsokkentesre()));
+                .map(Jatekok::getNyeresegLatogatonkent)
+                .reduce(0, Integer::sum);
 
         return bevetel * napiLatogatok;
     }
 
-    private double kiadasKalk(){
-        double kiadas = 0;
+    private int kiadasKalk(){
+        int kiadas = 0;
 
         return kiadas;
     }
 
-    private void latogatokKalk(){
+    private void checkReklamok(){
+        getJatekos().getReklamok()
+                .forEach(Reklamok::ervennyesseg);
+    }
 
+    private void latogatokKalk(){
+        int eredmeny =  this.jatekos.getReklamok()
+                .stream()
+                .filter(Reklamok::isMegrendelve)
+                .map(Reklamok::getUjLatogatokNaponta)
+                .reduce(0, Integer::sum);
+        this.napiLatogatok += eredmeny;
     }
 
     public void napVege(){
         napEltelik();
 
+    }
+
+    public void jatekosReklamoz(String mit){
+        this.uzenet = this.jatekos.reklamoz(mit);
+    }
+
+    public void jatekosFejleszt(String mit){
+        this.uzenet = this.jatekos.fejlesztes(mit);
     }
 
     public Jatekos getJatekos() {
@@ -103,5 +131,20 @@ public class Jatek {
 
     public JatekSzintek getSzint() {
         return szint;
+    }
+
+    public String getUzenet(){
+        return this. uzenet;
+    }
+
+    public void setUzenet(String uzenet){
+        this.uzenet = uzenet;
+    }
+
+    @Override
+    public String toString(){
+        return "Ez a játék " + elteltNapok + "-ik napja. A játék szintje: " + this.getSzint() + ". A napi látogatók száma: "
+                + this.napiLatogatok + ". A várható bevétel: " + this.varhatoBevetel + ", illetve a kiadás: " + this.varhatoKiadas
+                + "\n" + this.getJatekos();
     }
 }

@@ -1,8 +1,8 @@
-package hu.banattila.modellek.epuletek;
+package hu.banattila.modellek.jatekok;
 
 import hu.banattila.kivetelek.NincsElegPenz;
 import hu.banattila.modellek.emberek.Jatekos;
 
-public interface Epul {
+public interface Fejleszt {
     String fejleszt(Jatekos jatekos) throws NincsElegPenz;
 }

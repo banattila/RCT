@@ -2,21 +2,21 @@ package hu.banattila.modellek.emberek;
 
 public class Karbantarto extends Szemelyzet {
 
-    private double eselyCsokkentesre;
+    private int eselyCsokkentesre;
     public Karbantarto(String nev) {
         super(nev);
     }
 
-    public void setEselyCsokkentesre(double eselyCsokkentesre){
+    public void setEselyCsokkentesre(int eselyCsokkentesre){
         this.eselyCsokkentesre = eselyCsokkentesre;
     }
 
-    public double getEselyCsokkentesre(){
+    public int getEselyCsokkentesre(){
         return this.eselyCsokkentesre;
     }
 
     @Override
-    public void setFizetes(double fizetes) {
+    public void setFizetes(int fizetes) {
         if (fizetes >= 0) {
             this.fizetes = fizetes;
         } else {

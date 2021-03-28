@@ -1,6 +1,6 @@
 package hu.banattila.jatek;
 
-import hu.banattila.modellek.JatekSzintek;
+import hu.banattila.enumok.JatekSzintek;
 import hu.banattila.modellek.balesetek.Baleset;
 import hu.banattila.modellek.balesetek.Balesetek;
 

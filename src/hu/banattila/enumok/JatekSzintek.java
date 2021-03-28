@@ -1,4 +1,4 @@
-package hu.banattila.modellek;
+package hu.banattila.enumok;
 
 public enum JatekSzintek {
     KONNYU,
