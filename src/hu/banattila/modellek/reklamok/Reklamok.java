@@ -8,6 +8,7 @@ public abstract class Reklamok {
     private int hanyadikNapja;
     private double hatasfok;
     private final int idoTartam;
+    private final int ALAP_UJLATOGATOK;
     private int ujLatogatokNaponta;
     private double koltseg;
     private boolean megrendelve;
@@ -17,6 +18,7 @@ public abstract class Reklamok {
         this.nev = nev;
         this.idoTartam = idoTartam;
         this.megrendelve = false;
+        this.ALAP_UJLATOGATOK = ujLatogatokNaponta;
         init(jatekSzintek, koltseg, ujLatogatokNaponta);
         this.hatasfok = 100.0;
     }
@@ -41,40 +43,34 @@ public abstract class Reklamok {
         }
     }
 
-    public void ervennyesseg() {
-        boolean eredmeny = this.idoTartam > this.hanyadikNapja;
-        if (eredmeny && !megrendelve) {
+    public int ervennyesseg() {
+        int eredmeny = 0;
+        boolean ervenyes = this.idoTartam > this.hanyadikNapja;
+        if (!ervenyes) {
             this.hanyadikNapja = 0;
             this.megrendelve = false;
-        } else if(megrendelve){
+        } else if (ervenyes && megrendelve) {
             incHanyadikNapja();
+            eredmeny += getUjLatogatokNaponta();
         }
-        setHatasfok();
+        setUjLatogatokNaponta();
+        return eredmeny;
     }
 
     private void incHanyadikNapja() {
         this.hanyadikNapja++;
     }
 
-    private void setUjLatogatokNaponta() {
-        this.ujLatogatokNaponta = (int)(getUjLatogatokNaponta() * this.hatasfok / 100);
-    }
-
-    private void checkHatasfok(double hatasfok) {
-        if (hatasfok < 100) {
-            this.hatasfok = hatasfok;
+    public void setUjLatogatokNaponta() {
+        if (megrendelve) {
+            this.ujLatogatokNaponta = (int) (getUjLatogatokNaponta() * 0.9);
         } else {
-            this.hatasfok = 100;
+            this.ujLatogatokNaponta = (int) (getUjLatogatokNaponta() * 1.1);
         }
-    }
 
-    private void setHatasfok() {
-        if (this.megrendelve) {
-            checkHatasfok(this.hatasfok * 0.9);
-        } else {
-            checkHatasfok(this.hatasfok * 1.1);
+        if (getUjLatogatokNaponta() > ALAP_UJLATOGATOK){
+            this.ujLatogatokNaponta = ALAP_UJLATOGATOK;
         }
-        setUjLatogatokNaponta();
     }
 
     public void megrendel() {

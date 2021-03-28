@@ -116,13 +116,15 @@ public final class Jatekos {
                 .append(getNev())
                 .append(" akinek ")
                 .append(getPenz())
-                .append(" fabatkája van.\n\n")
+                .append(" fabatkája van.\n\n");
+/*
                 .append("Játékai:\n\n");
         this.getJatekok().forEach(
                 it -> {
                     sb.append(it);
                     sb.append("\n");
                 });
+*/
 
         sb.append("Reklámjai:\n\n");
         this.reklamok.forEach(
@@ -130,7 +132,7 @@ public final class Jatekos {
                     sb.append(it);
                     sb.append("\n");
                 }
-        );
+        );/*
         sb.append("Alkalmazottai:\n");
         sb.append((this.konyvelo == null)?"":this.konyvelo + "\n");
         this.karbantartok.forEach(
@@ -139,7 +141,7 @@ public final class Jatekos {
                     sb.append("\n");
                 }
         );
-        sb.append((this.konyvelo == null && this.karbantartok.size() == 0)?"Nincsenek alkalmazottai.":"");
+        sb.append((this.konyvelo == null && this.karbantartok.size() == 0)?"Nincsenek alkalmazottai.":"");*/
         return sb.toString();
     }
 }

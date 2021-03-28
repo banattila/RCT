@@ -11,8 +11,8 @@ public class ListaFactory {
 
     protected static Set<Reklamok> initReklamok(JatekSzintek szint){
         Set<Reklamok> reklamok = new HashSet<>();
-        reklamok.add(new Szorolapozas(szint));
         reklamok.add(new UjsagHirdetes(szint));
+        reklamok.add(new Szorolapozas(szint));
         reklamok.add(new OriasPlakat(szint));
         reklamok.add(new TVReklam(szint));
         reklamok.add(new AdSense(szint));

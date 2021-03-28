@@ -45,7 +45,8 @@ public class Jatek {
         System.out.println("------------------ A várható napi kiadás: " + this.varhatoKiadas);
         this.jatekos.setPenz(this.getJatekos().getPenz() + this.varhatoBevetel - this.varhatoKiadas);
         System.out.println("------------------- A napnak vége lett ------------------------------------");
-        checkReklamok();
+        System.out.println("------------------- A napnak vége lett ------------------------------------");
+        System.out.println("------------------- A napnak vége lett ------------------------------------");
         latogatokKalk();
         this.varhatoBevetel = bevetelKalk();
 
@@ -90,18 +91,11 @@ public class Jatek {
         return kiadas;
     }
 
-    private void checkReklamok(){
-        getJatekos().getReklamok()
-                .forEach(Reklamok::ervennyesseg);
-    }
 
     private void latogatokKalk(){
-        int eredmeny =  this.jatekos.getReklamok()
-                .stream()
-                .filter(Reklamok::isMegrendelve)
-                .map(Reklamok::getUjLatogatokNaponta)
-                .reduce(0, Integer::sum);
-        this.napiLatogatok += eredmeny;
+
+        getJatekos().getReklamok()
+                .forEach(it -> this.napiLatogatok += it.ervennyesseg());
     }
 
     public void napVege(){
