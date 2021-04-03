@@ -5,14 +5,16 @@ import hu.banattila.enumok.JatekSzintek;
 public abstract class Baleset {
 
     private final String nev;
-    private int kiadas;
+    private final int kiadas;
     private final int latogatoCsokkenes;
     private final double esely;
+    private final String hozzaTartozoJatek;
 
-    public Baleset(String nev, JatekSzintek szint,int kiadas,  int latogatoCsokkenes, double esely) {
+    public Baleset(String nev, JatekSzintek szint,int kiadas,  int latogatoCsokkenes, double esely, String hozzaTartozoJatek) {
         this.nev = nev;
         this.kiadas = kiadas;
         this.latogatoCsokkenes = latogatoCsokkenes;
+        this.hozzaTartozoJatek = hozzaTartozoJatek;
 
         switch (szint){
             case KONNYU: break;
@@ -36,5 +38,9 @@ public abstract class Baleset {
 
     public double getEsely() {
         return esely;
+    }
+
+    public String getHozzaTartozoJatek() {
+        return hozzaTartozoJatek;
     }
 }
