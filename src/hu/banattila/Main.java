@@ -17,9 +17,9 @@ public class Main {
         while (Jatek.getElteltNapok() < 100){
             System.out.println(jatek);
 
-            jatek.jatekosFejleszt(JatekNevek.VATTACUKROS.name());
-            jatek.jatekosReklamoz(ReklamNevek.UJSAGHIRDETES.name());
-            jatek.jatekosReklamoz(ReklamNevek.UJSAGHIRDETES.name());
+            jatek.jatekosFejleszt(JatekNevek.VATTACUKROS.getNev());
+            jatek.jatekosReklamoz(ReklamNevek.UJSAGHIRDETES.getNev());
+            jatek.jatekosReklamoz(ReklamNevek.UJSAGHIRDETES.getNev());
             try {
                 jatek.getJatekos().alkalmaz(new Karbantarto("Sanyi"));
                 jatek.getJatekos().alkalmaz(new Karbantarto("Jani"));

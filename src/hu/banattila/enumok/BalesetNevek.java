@@ -12,4 +12,8 @@ public enum BalesetNevek {
     BalesetNevek(String nev) {
         this.nev = nev;
     }
+
+    public String getNev() {
+        return nev;
+    }
 }

@@ -6,6 +6,6 @@ import hu.banattila.enumok.ReklamNevek;
 public class TVReklam extends Reklamok {
 
     public TVReklam(JatekSzintek jatekSzintek) {
-        super(ReklamNevek.TVREKLAM.name(), jatekSzintek, 64000, 3200, 8);
+        super(ReklamNevek.TVREKLAM.getNev(), jatekSzintek, 64000, 3200, 8);
     }
 }

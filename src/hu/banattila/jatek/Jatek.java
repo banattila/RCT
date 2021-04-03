@@ -137,7 +137,7 @@ public class Jatek {
 
     @Override
     public String toString() {
-        return "Ez a játék " + getElteltNapok() + "-ik napja. A játék szintje: " + this.getSzint() + ". A napi látogatók száma: "
+        return "Ez a játék " + getElteltNapok() + "-ik napja. A játék szintje: " + this.getSzint().getName() + ". A napi látogatók száma: "
                 + napiLatogatok + ". A várható bevétel: " + varhatoBevetel + ", illetve a kiadás: " + varhatoKiadas
                 + "\n" + this.getJatekos();
     }
