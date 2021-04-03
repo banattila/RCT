@@ -1,10 +1,7 @@
 package hu.banattila.modellek.reklamok;
 
-<<<<<<< HEAD
-import hu.banattila.modellek.JatekSzintek;
-=======
+
 import hu.banattila.enumok.JatekSzintek;
->>>>>>> console
 
 public abstract class Reklamok {
 
@@ -12,29 +9,18 @@ public abstract class Reklamok {
     private int hanyadikNapja;
     private double hatasfok;
     private final int idoTartam;
-<<<<<<< HEAD
-=======
     private final int ALAP_UJLATOGATOK;
->>>>>>> console
     private int ujLatogatokNaponta;
     private double koltseg;
     private boolean megrendelve;
 
-<<<<<<< HEAD
-=======
-
->>>>>>> console
     public Reklamok(String nev, JatekSzintek jatekSzintek, double koltseg, int ujLatogatokNaponta, int idoTartam) {
         this.nev = nev;
         this.idoTartam = idoTartam;
         this.megrendelve = false;
-<<<<<<< HEAD
-        init(jatekSzintek, koltseg, ujLatogatokNaponta);
-=======
         this.ALAP_UJLATOGATOK = ujLatogatokNaponta;
         init(jatekSzintek, koltseg, ujLatogatokNaponta);
         this.hatasfok = 100.0;
->>>>>>> console
     }
 
     private void init(JatekSzintek jatekSzintek, double koltseg, int ujLatogatokNaponta) {
@@ -57,17 +43,6 @@ public abstract class Reklamok {
         }
     }
 
-<<<<<<< HEAD
-    public boolean ervennyesseg() {
-        boolean eredmeny = this.idoTartam > this.hanyadikNapja;
-        if (!eredmeny || !megrendelve) {
-            this.hanyadikNapja = 0;
-            this.megrendelve = false;
-        } else if (eredmeny && megrendelve) {
-            incHanyadikNapja();
-            setHatasfok();
-        }
-=======
     public int ervennyesseg() {
         int eredmeny = 0;
         boolean ervenyes = this.idoTartam > this.hanyadikNapja;
@@ -79,7 +54,6 @@ public abstract class Reklamok {
             eredmeny += getUjLatogatokNaponta();
         }
         setUjLatogatokNaponta();
->>>>>>> console
         return eredmeny;
     }
 
@@ -87,27 +61,6 @@ public abstract class Reklamok {
         this.hanyadikNapja++;
     }
 
-<<<<<<< HEAD
-    private void setUjLatogatokNaponta() {
-        this.ujLatogatokNaponta *= this.hatasfok;
-    }
-
-    private void checkHatasfok(double hatasfok) {
-        if (hatasfok > 100) {
-            this.hatasfok = hatasfok;
-        } else {
-            this.hatasfok = 100;
-        }
-    }
-
-    private void setHatasfok() {
-        if (this.megrendelve) {
-            checkHatasfok(this.hatasfok * 0.9);
-        } else {
-            checkHatasfok(this.hatasfok * 1.1);
-        }
-        setUjLatogatokNaponta();
-=======
     public void setUjLatogatokNaponta() {
         if (megrendelve) {
             this.ujLatogatokNaponta = (int) (getUjLatogatokNaponta() * 0.9);
@@ -118,7 +71,6 @@ public abstract class Reklamok {
         if (getUjLatogatokNaponta() > ALAP_UJLATOGATOK){
             this.ujLatogatokNaponta = ALAP_UJLATOGATOK;
         }
->>>>>>> console
     }
 
     public void megrendel() {
@@ -137,11 +89,6 @@ public abstract class Reklamok {
         return this.ujLatogatokNaponta;
     }
 
-<<<<<<< HEAD
-    public double getKoltseg() {
-        return this.koltseg;
-    }
-=======
     public int getHanyadikNapja() {
         return this.hanyadikNapja;
     }
@@ -170,5 +117,4 @@ public abstract class Reklamok {
 
         return sb.toString();
     }
->>>>>>> console
 }
