@@ -10,11 +10,11 @@ public class Konyvelo extends Szemelyzet {
     }
 
     @Override
-    public void setFizetes(double napiToke) {
-        this.fizetes = napiToke * 0.02;
+    public void setFizetes(int napiToke) {
+        this.fizetes = (int)(napiToke * 0.02);
     }
 
-    public double getFizetes(){
+    public int getFizetes(){
         return this.fizetes;
     }
 
@@ -23,6 +23,5 @@ public class Konyvelo extends Szemelyzet {
             konyvelo = new Konyvelo(kit);
         }
         return konyvelo;
-
     }
 }

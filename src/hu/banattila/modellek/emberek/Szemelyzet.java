@@ -3,7 +3,7 @@ package hu.banattila.modellek.emberek;
 public abstract class Szemelyzet {
 
     private final String nev;
-    protected double fizetes;
+    protected int fizetes;
 
     public Szemelyzet(String nev) {
         this.nev = nev;
@@ -13,9 +13,14 @@ public abstract class Szemelyzet {
         return this.nev;
     }
 
-    public double getFizetes() {
+    public int getFizetes() {
         return this.fizetes;
     }
 
-    abstract void setFizetes(double fizetes);
+    abstract void setFizetes(int fizetes);
+
+    @Override
+    public String toString(){
+        return getNev() + " fizetése: " + getFizetes() + ".";
+    }
 }
