@@ -7,6 +7,6 @@ import hu.banattila.enumok.JatekSzintek;
 public class Szetesik extends Baleset{
 
     public Szetesik(BalesetNevek nev, JatekSzintek szint){
-        super(nev.name(), szint,25000, 5, 8, JatekNevek.KORHINTA.name());
+        super(nev.getNev(), szint,25000, 5, 8, JatekNevek.KORHINTA.name());
     }
 }

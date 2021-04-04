@@ -57,7 +57,7 @@ public class NapiKalkulator {
         List<Jatekok> jatekok = new ArrayList<>(jatekos.getJatekok());
 
         for (int balesetIndex = 0; balesetIndex < jatekok.size(); balesetIndex++){
-            if (beset.get(balesetIndex).getNev().equals(BalesetNevek.BIRSAG.name())){
+            if (beset.get(balesetIndex).getNev().equals(BalesetNevek.BIRSAG.getNev())){
                 double esely = rand.nextDouble() * 99;
                 if (jatekos.getKonyvelo() != null){
                     esely *= 1.02;

@@ -7,7 +7,7 @@ import hu.banattila.enumok.ReklamNevek;
 public class OriasPlakat extends Reklamok {
 
     public OriasPlakat(JatekSzintek jatekSzintek) {
-        super(ReklamNevek.ORIASPLAKAT.name(), jatekSzintek, 16000, 800, 4);
+        super(ReklamNevek.ORIASPLAKAT.getNev(), jatekSzintek, 16000, 800, 4);
 
     }
 }

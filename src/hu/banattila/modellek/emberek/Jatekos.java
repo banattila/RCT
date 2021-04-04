@@ -49,8 +49,14 @@ public final class Jatekos {
             return reklam.getNev() + " már meg van rendelve " + reklam.getHanyadikNapja() + " napja.";
         }
 
-        reklam.megrendel();
-        return "Sikeresen megrendelted a " + reklam.getNev() + " -ot " + reklam.getIdoTartam() + " napra";
+        if (getPenz() - reklam.getKoltseg() > 0){
+            reklam.megrendel();
+            setPenz(getPenz() - reklam.getKoltseg());
+            return "Sikeresen megrendelted a " + reklam.getNev() + " -ot " + reklam.getIdoTartam() + " napra";
+        } else {
+            return "Nincs elég pénzed megrendelni a " + reklam.getNev() + "-t.";
+        }
+
     }
 
     public Set<Reklamok> getReklamok(){

@@ -11,10 +11,10 @@ public abstract class Reklamok {
     private final int idoTartam;
     private final int ALAP_UJLATOGATOK;
     private int ujLatogatokNaponta;
-    private double koltseg;
+    private int koltseg;
     private boolean megrendelve;
 
-    public Reklamok(String nev, JatekSzintek jatekSzintek, double koltseg, int ujLatogatokNaponta, int idoTartam) {
+    public Reklamok(String nev, JatekSzintek jatekSzintek, int koltseg, int ujLatogatokNaponta, int idoTartam) {
         this.nev = nev;
         this.idoTartam = idoTartam;
         this.megrendelve = false;
@@ -23,19 +23,19 @@ public abstract class Reklamok {
         this.hatasfok = 100.0;
     }
 
-    private void init(JatekSzintek jatekSzintek, double koltseg, int ujLatogatokNaponta) {
+    private void init(JatekSzintek jatekSzintek, int koltseg, int ujLatogatokNaponta) {
         switch (jatekSzintek) {
-            case KONNYU: {
+            case KONNYU -> {
                 this.koltseg = koltseg;
                 this.ujLatogatokNaponta = ujLatogatokNaponta;
                 break;
             }
-            case KOZEPES: {
+            case KOZEPES -> {
                 this.koltseg = koltseg * 2;
                 this.ujLatogatokNaponta = ujLatogatokNaponta / 2;
                 break;
             }
-            case NEHEZ: {
+            case NEHEZ -> {
                 this.koltseg = koltseg * 4;
                 this.ujLatogatokNaponta = ujLatogatokNaponta / 4;
                 break;
@@ -93,7 +93,7 @@ public abstract class Reklamok {
         return this.hanyadikNapja;
     }
 
-    public double getKoltseg() {
+    public int getKoltseg() {
         return this.koltseg;
     }
 

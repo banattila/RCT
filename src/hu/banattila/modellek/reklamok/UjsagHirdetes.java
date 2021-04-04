@@ -6,6 +6,6 @@ import hu.banattila.enumok.ReklamNevek;
 public class UjsagHirdetes extends Reklamok {
 
     public UjsagHirdetes(JatekSzintek jatekSzintek) {
-        super(ReklamNevek.UJSAGHIRDETES.name(), jatekSzintek, 4000, 200, 2);
+        super(ReklamNevek.UJSAGHIRDETES.getNev(), jatekSzintek, 4000, 200, 2);
     }
 }

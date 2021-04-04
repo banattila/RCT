@@ -1,5 +1,7 @@
 package hu.banattila;
 
+import hu.banattila.enumok.JatekSzintek;
+import hu.banattila.jatek.Jatek;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -11,15 +13,34 @@ import java.io.IOException;
 
 public class Main extends Application {
 
+    private static Jatek jatek;
+    private static Scene scene;
+
+    public static void setJatek(Jatek j){
+        jatek = j;
+    }
+    public static Jatek getJatek(){
+        return jatek;
+    }
+
+    public static void setRoot(String fxml) throws IOException {
+        scene.setRoot(loadFXML(fxml));
+    }
+
+    private static Parent loadFXML(String fxml) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(fxml + ".fxml"));
+        return fxmlLoader.load();
+    }
+
+
     @Override
     public void start(Stage primaryStage) {
-        Parent root = null;
+
         try {
-            root = FXMLLoader.load(getClass().getResource("fxml/vidampark.fxml"));
+            scene = new Scene(loadFXML("fxml/vidampark"));
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Scene scene = new Scene(root, 1024, 768);
         scene.getStylesheets().add("/hu/banattila/style/gamePane.css");
 
         primaryStage.setTitle("Roller Coaster Tycoon");

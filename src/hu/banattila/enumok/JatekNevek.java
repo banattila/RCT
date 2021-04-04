@@ -13,4 +13,8 @@ public enum JatekNevek {
     JatekNevek(String nev){
         this.nev = nev;
     }
+
+    public String getNev(){
+        return this.nev;
+    }
 }
