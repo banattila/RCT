@@ -72,7 +72,7 @@ public abstract class Jatekok implements Fejleszt {
     }
 
     private boolean tranzakcioEllenorzes(double jatekosPenze) throws NincsElegPenz {
-        if (jatekosPenze > this.getFejlesztesKoltseg()) {
+        if (jatekosPenze >= this.getFejlesztesKoltseg()) {
             return true;
         } else {
             throw new NincsElegPenz(this.getNev()

@@ -15,15 +15,15 @@ public class Jatek {
     private final Set<Baleset> balesetek;
     private final JatekSzintek szint;
     private static int napiLatogatok;
-    private static int varhatoBevetel;
-    private static int varhatoKiadas;
-    private final List<String> uzenet;
+    private static long varhatoBevetel;
+    private static long varhatoKiadas;
+    private static List<String> uzenet;
 
     public Jatek(String jatekosNev, JatekSzintek szint) {
         this.szint = szint;
         this.jatekos = new Jatekos(jatekosNev, szint);
         this.balesetek = BalesetekInit.createBalesetek(szint);
-        this.uzenet = new ArrayList<>();
+        uzenet = new ArrayList<>();
         napiLatogatok = 10;
         varhatoBevetel = 0;
         varhatoKiadas = 0;
@@ -40,6 +40,7 @@ public class Jatek {
             elteltNapok = 1000;
             System.out.println("A játéknak vége, a játékos pénze: " + getJatekos().getPenz());
         } else {
+            clearUzenetek();
             elteltNapok++;
             bevetelKalk();
             kiadasok();
@@ -52,7 +53,7 @@ public class Jatek {
             System.out.println("------------------- A napnak vége lett ------------------------------------");
             System.out.println("------------------ A várható napi bevétel: " + varhatoBevetel + " ----------------");
             System.out.println("------------------ A várható napi kiadás: " + varhatoKiadas + " ----------------");
-            clearUzenetek();
+
 
         }
 
@@ -107,8 +108,8 @@ public class Jatek {
         this.uzenet.clear();
     }
 
-    public void addUzenet(String mit) {
-        this.uzenet.add(mit);
+    public static void addUzenet(String mit) {
+        uzenet.add(mit);
     }
 
     public static int getNapiLatogatok() {
@@ -119,19 +120,19 @@ public class Jatek {
         Jatek.napiLatogatok = napiLatogatok;
     }
 
-    public static int getVarhatoBevetel() {
+    public static long getVarhatoBevetel() {
         return varhatoBevetel;
     }
 
-    public static void setVarhatoBevetel(int varhatoBevetel) {
+    public static void setVarhatoBevetel(long varhatoBevetel) {
         Jatek.varhatoBevetel = varhatoBevetel;
     }
 
-    public static int getVarhatoKiadas() {
+    public static long getVarhatoKiadas() {
         return varhatoKiadas;
     }
 
-    public static void setVarhatoKiadas(int varhatoKiadas) {
+    public static void setVarhatoKiadas(long varhatoKiadas) {
         Jatek.varhatoKiadas = varhatoKiadas;
     }
 

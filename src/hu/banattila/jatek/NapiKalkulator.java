@@ -23,7 +23,7 @@ public class NapiKalkulator {
     /*Könyvelő bére*/
     private static int konyveloFizetes(Konyvelo konyvelo) {
         if (konyvelo != null) {
-            konyvelo.setFizetes(Jatek.getVarhatoBevetel());
+            konyvelo.setFizetes((int)Jatek.getVarhatoBevetel());
             return konyvelo.getFizetes();
         }
         return 0;
@@ -40,7 +40,7 @@ public class NapiKalkulator {
     private static int karbantartoFizetes(List<Karbantarto> karbantartok) {
         karbantartoHatekonysag(karbantartok);
         karbantartok.forEach(it ->
-                it.setFizetes(it.getEselyCsokkentesre() * Jatek.getVarhatoBevetel() / 100));
+                it.setFizetes(it.getEselyCsokkentesre() * (int)Jatek.getVarhatoBevetel() / 100));
         return karbantartok
                 .stream().map(Szemelyzet::getFizetes).reduce(0, Integer::sum);
     }
@@ -71,16 +71,16 @@ public class NapiKalkulator {
                     uzenetek.add(beset.get(balesetIndex).getNev());
                 }
             }
-            for (Jatekok value : jatekok) {
-                if (value.getSzint() > 0) {
-                    if (beset.get(balesetIndex).getHozzaTartozoJatek().equals(value.getNev())) {
+            for (int jatekokIndex = 0; jatekokIndex < jatekok.size(); jatekokIndex++){
+                if (jatekok.get(jatekokIndex).getSzint() > 0){
+                    if (beset.get(balesetIndex).getHozzaTartozoJatek().equals(jatekok.get(jatekokIndex).getNev())){
                         double esely = rand.nextDouble() * 99;
-                        if (!jatekos.getKarbantartok().isEmpty()) {
-                            for (Karbantarto karbantarto : jatekos.getKarbantartok()) {
-                                esely *= 1.0 + (double) karbantarto.getEselyCsokkentesre() / 100;
+                        if (!jatekos.getKarbantartok().isEmpty()){
+                            for (Karbantarto karbantarto: jatekos.getKarbantartok()){
+                                esely *= 1.0 + (double)karbantarto.getEselyCsokkentesre() / 100;
                             }
                         }
-                        if (esely < beset.get(balesetIndex).getEsely()) {
+                        if (esely < beset.get(balesetIndex).getEsely()){
                             eredmeny += beset.get(balesetIndex).getKiadas();
                             Jatek.setNapiLatogatok(Jatek.getNapiLatogatok() - beset.get(balesetIndex).getLatogatoCsokkenes());
                             uzenetek.add(beset.get(balesetIndex).getNev());
@@ -124,7 +124,10 @@ public class NapiKalkulator {
     }
 
     protected static void bevetelKalk(Set<Reklamok> reklamok, Set<Jatekok> jatekok) {
-        Jatek.setVarhatoBevetel(Jatek.getVarhatoBevetel() + bevetel(jatekok, Jatek.getNapiLatogatok()));
+        long bevetel = Jatek.getVarhatoBevetel() + bevetel(jatekok, Jatek.getNapiLatogatok());
+        if (bevetel < Long.MAX_VALUE){
+            Jatek.setVarhatoBevetel(bevetel);
+        }
         Jatek.setNapiLatogatok(Jatek.getNapiLatogatok() + ujLatogatokSzama(reklamok));
     }
 }

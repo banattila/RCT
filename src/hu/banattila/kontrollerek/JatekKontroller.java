@@ -4,12 +4,13 @@ import hu.banattila.Main;
 import hu.banattila.enumok.JatekNevek;
 import hu.banattila.enumok.ReklamNevek;
 import hu.banattila.jatek.Jatek;
+import hu.banattila.kivetelek.MaxSzemelyzetSzam;
 import hu.banattila.modellek.reklamok.Reklamok;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,7 +22,8 @@ public class JatekKontroller {
     public JatekKontroller() {
     }
 
-    List<Label> checkBoxes = new ArrayList<>();
+    List<Label> reklamok = new ArrayList<>();
+    List<Label> karbantartok = new ArrayList<>();
 
     @FXML
     private Label nev;
@@ -91,12 +93,103 @@ public class JatekKontroller {
     private Label adSense;
 
     @FXML
+    private CheckBox lali;
+
+    private void setKonyvelo(){
+        lali.setOnAction(event -> {
+            if (lali.isSelected()){
+                Main.getJatek().getJatekos().konyvelotAlkalmaz();
+                lali.setText(Main.getJatek().getJatekos().getKonyvelo().getNev());
+
+            } else if(!lali.isSelected()){
+                lali.setText("Nincs alkalmazásban");
+                Main.getJatek().getJatekos().konyvelotKirug();
+            }
+            setUzik();
+        });
+    }
+
+    @FXML
+    private Label karbantarto1;
+
+    @FXML
+    private Label karbantarto2;
+
+    @FXML
+    private Label karbantarto3;
+
+    @FXML
+    private Label karbantarto4;
+
+    @FXML
+    private Label karbantarto5;
+
+    @FXML
+    private Label kirug1;
+
+    @FXML
+    private Label kirug2;
+
+    @FXML
+    private Label kirug3;
+
+    @FXML
+    private Label kirug4;
+
+    @FXML
+    private Label kirug5;
+
+
+    private void setKarbantartoList(){
+        karbantartok.add(karbantarto1);
+        karbantartok.add(karbantarto2);
+        karbantartok.add(karbantarto3);
+        karbantartok.add(karbantarto4);
+        karbantartok.add(karbantarto5);
+    }
+
+    private void karbantartoAlkalmazasok(){
+        setKarbantartoList();
+        disableAlkalmaz();
+    }
+
+    @FXML
+    private TextField kitAlkalmaz;
+
+    private void disableAlkalmaz(){
+        alkalmaz.setOnAction( event -> {
+            if (!kitAlkalmaz.getText().isEmpty()){
+                try {
+                    Main.getJatek().getJatekos().karbantartotFelvesz(kitAlkalmaz.getText());
+                } catch (MaxSzemelyzetSzam e) {
+                    Jatek.addUzenet(e.getMessage());
+                    setUzik();
+                }
+                for (int i = 0; i < karbantartok.size(); i++){
+                    if (Main.getJatek().getJatekos().getKarbantartok().size() > i){
+                        karbantartok.get(i).setText(Main.getJatek().getJatekos().getKarbantartok().get(i).getNev());
+                    } else {
+                        karbantartok.get(i).setText("Nincs alkalmazásban");
+                    }
+                }
+            } else {
+                Jatek.addUzenet("Írd be hogy kit alkalmazol");
+                setUzik();
+            }
+            kitAlkalmaz.setText("");
+        });
+    }
+
+    @FXML
+    private Button alkalmaz;
+
+    @FXML
     private void initCheckBoxLista() {
-        checkBoxes.add(szorolap);
-        checkBoxes.add(ujsaghirdetes);
-        checkBoxes.add(oriasplakat);
-        checkBoxes.add(tvReklam);
-        checkBoxes.add(adSense);
+        reklamok.add(szorolap);
+        reklamok.add(ujsaghirdetes);
+        reklamok.add(oriasplakat);
+        reklamok.add(tvReklam);
+        reklamok.add(adSense);
     }
 
     private void initReklamok(){
@@ -110,7 +203,7 @@ public class JatekKontroller {
 
     private void setReklamok() {
         initReklamok();
-        for (Label chB : checkBoxes) {
+        for (Label chB : reklamok) {
             chB.setOnMouseClicked( event ->{
                 Main.getJatek().jatekosReklamoz(chB.getText());
                 if (Main.getJatek().getUzenet().get(Main.getJatek().getUzenet().size() - 1).contains("Sikeresen megrendelted")
@@ -126,7 +219,7 @@ public class JatekKontroller {
     }
 
     private void reklamLejar() {
-        for (Label chB : checkBoxes) {
+        for (Label chB : reklamok) {
             List<Reklamok>lejartak = Main.getJatek().getJatekos().getReklamok().stream().filter(
                     it -> !it.isMegrendelve() && it.getNev().equals(chB.getText())
             ).collect(Collectors.toList());
@@ -161,7 +254,7 @@ public class JatekKontroller {
     }
 
     private void setTexts() {
-        nev.setText("Név " + Main.getJatek().getJatekos().getNev());
+        nev.setText("" + Main.getJatek().getJatekos().getNev());
         penz.setText("Pénzed: " + Main.getJatek().getJatekos().getPenz());
         nap.setText(Main.getJatek().getElteltNapok() + ". nap");
         setUzik();
@@ -215,6 +308,7 @@ public class JatekKontroller {
         setJatekok();
         reklamok();
         setLatogatok();
-
+        setKonyvelo();
+        karbantartoAlkalmazasok();
     }
 }

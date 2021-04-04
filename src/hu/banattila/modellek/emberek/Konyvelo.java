@@ -18,9 +18,9 @@ public class Konyvelo extends Szemelyzet {
         return this.fizetes;
     }
 
-    public static Konyvelo konyvelotAlkalmaz(String kit) {
+    public static Konyvelo konyvelotAlkalmaz() {
         if (konyvelo == null) {
-            konyvelo = new Konyvelo(kit);
+            konyvelo = new Konyvelo("Dr. Bokros Lajos");
         }
         return konyvelo;
     }

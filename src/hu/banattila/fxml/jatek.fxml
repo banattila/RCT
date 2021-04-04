@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 
 <AnchorPane prefHeight="768.0" prefWidth="1024.0" styleClass="pane" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hu.banattila.kontrollerek.JatekKontroller">
    <children>
-      <Button id="napVege" fx:id="napVege" layoutX="910.0" layoutY="665.0" mnemonicParsing="false" prefHeight="89.0" prefWidth="100.0" text="Nap Vége" />
+      <Button id="napVege" fx:id="napVege" layoutX="874.0" layoutY="624.0" mnemonicParsing="false" prefHeight="89.0" prefWidth="100.0" text="Nap Vége" />
       <Pane id="to" fx:id="to" layoutX="323.0" layoutY="453.0" prefHeight="200.0" prefWidth="200.0">
          <children>
             <Button id="csonakazo" fx:id="csonakazo" layoutX="40.0" layoutY="-59.0" mnemonicParsing="false" prefHeight="159.0" prefWidth="153.0" text="Csónakázó" />
@@ -19,23 +22,24 @@
       <Button id="korhinta" fx:id="korhinta" layoutX="67.0" layoutY="417.0" mnemonicParsing="false" prefHeight="159.0" prefWidth="189.0" text="Körhinta" />
       <Pane id="menu" layoutY="1.0" prefHeight="89.0" prefWidth="1024.0" styleClass="menu">
          <children>
-            <Label fx:id="nap" layoutX="36.0" layoutY="34.0" text="Nap" />
-            <Label fx:id="penz" layoutX="785.0" layoutY="34.0" text="Pénz" />
-            <Label fx:id="nev" layoutX="956.0" layoutY="31.0" text="Név" />
-            <Label fx:id="uzenetek" layoutX="230.0" layoutY="31.0" text="Üzenetek" />
+            <Label fx:id="nap" layoutX="38.0" layoutY="31.0" text="Nap" />
+            <Label fx:id="penz" layoutX="783.0" layoutY="31.0" text="Pénz" />
+            <Label fx:id="nev" layoutX="947.0" layoutY="59.0" text="Név" />
+            <Label fx:id="uzenetek" layoutX="226.0" layoutY="31.0" text="Üzenetek" />
             <Label fx:id="latogatok" layoutX="783.0" layoutY="67.0" text="Látogatók Száma" />
+            <Label layoutX="942.0" layoutY="31.0" text="Név" />
          </children>
       </Pane>
       <Pane layoutX="725.0" layoutY="90.0" prefHeight="517.0" prefWidth="278.0">
          <children>
-            <Pane layoutX="14.0" layoutY="14.0" prefHeight="200.0" prefWidth="175.0">
+            <Pane layoutX="14.0" layoutY="14.0" prefHeight="200.0" prefWidth="247.0">
                <children>
-                  <Label layoutX="55.0" layoutY="6.0" text="Reklámok" />
-                  <Label fx:id="szorolap" layoutX="44.0" layoutY="37.0" text="Szórólap" />
-                  <Label fx:id="ujsaghirdetes" layoutX="44.0" layoutY="61.0" text="Újsághirdetés" />
-                  <Label fx:id="oriasplakat" layoutX="44.0" layoutY="92.0" text="Óriásplakát" />
-                  <Label fx:id="tvReklam" layoutX="44.0" layoutY="121.0" text="Tv Reklám" />
-                  <Label fx:id="adSense" layoutX="44.0" layoutY="150.0" text="AdSense" />
+                  <Label layoutX="111.0" layoutY="6.0" text="Reklámok" />
+                  <Label fx:id="szorolap" layoutX="55.0" layoutY="42.0" text="Szórólap" />
+                  <Label fx:id="ujsaghirdetes" layoutX="43.0" layoutY="74.0" text="Újsághirdetés" />
+                  <Label fx:id="oriasplakat" layoutX="50.0" layoutY="100.0" text="Óriásplakát" />
+                  <Label fx:id="tvReklam" layoutX="53.0" layoutY="135.0" text="Tv Reklám" />
+                  <Label fx:id="adSense" layoutX="55.0" layoutY="164.0" text="AdSense" />
                </children>
             </Pane>
             <Label fx:id="szorolapAr" layoutX="195.0" layoutY="54.0" text="Label" />
@@ -43,7 +47,37 @@
             <Label fx:id="oriasplakatAr" layoutX="195.0" layoutY="114.0" text="Label" />
             <Label fx:id="tvReklamAr" layoutX="195.0" layoutY="147.0" text="Label" />
             <Label fx:id="adSenseAr" layoutX="195.0" layoutY="177.0" text="Label" />
+            <Pane layoutX="14.0" layoutY="232.0" prefHeight="284.0" prefWidth="264.0">
+               <children>
+                  <Label layoutX="86.0" layoutY="14.0" text="Alkalmazottak" />
+                  <Label layoutX="29.0" layoutY="46.0" prefHeight="16.0" prefWidth="89.0" text="Karbantartók" />
+                  <VBox layoutX="10.0" layoutY="86.0" prefHeight="112.0" prefWidth="153.0">
+                     <children>
+                        <Label fx:id="karbantarto1" text="Nincs alkalmazásban" />
+                        <Label fx:id="karbantarto2" prefHeight="16.0" prefWidth="137.0" text="Nincs alkalmazásban" />
+                        <Label fx:id="karbantarto3" text="Nincs alkalmazásban" />
+                        <Label fx:id="karbantarto4" text="Nincs alkalmazásban" />
+                        <Label fx:id="karbantarto5" text="Nincs alkalmazásban" />
+                     </children>
+                  </VBox>
+                  <Label layoutX="179.0" layoutY="198.0" text="Könyvelő" />
+                  <CheckBox fx:id="lali" layoutX="167.0" layoutY="225.0" mnemonicParsing="false" text="Könyvelő" />
+                  <TextField fx:id="kitAlkalmaz" layoutX="13.0" layoutY="221.0" prefHeight="26.0" prefWidth="122.0" />
+                  <Label layoutX="9.0" layoutY="198.0" text="Új alkalmazott neve" />
+                  <Button fx:id="alkalmaz" layoutX="43.0" layoutY="247.0" mnemonicParsing="false" text="Alkalmaz" />
+                  <VBox layoutX="155.0" layoutY="88.0" prefHeight="83.0" prefWidth="25.0">
+                     <children>
+                        <Label fx:id="kirug1" text="-" />
+                        <Label fx:id="kirug2" text="-" />
+                        <Label fx:id="kirug3" text="-" />
+                        <Label fx:id="kirug4" text="-" />
+                        <Label fx:id="kirug5" text="-" />
+                     </children>
+                  </VBox>
+               </children>
+            </Pane>
          </children>
       </Pane>
+      <CheckBox fx:id="autoSave" layoutX="844.0" layoutY="727.0" mnemonicParsing="false" text="Automatikus mentés" />
    </children>
 </AnchorPane>
