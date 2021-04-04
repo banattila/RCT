@@ -5,12 +5,14 @@ import hu.banattila.enumok.JatekNevek;
 import hu.banattila.enumok.ReklamNevek;
 import hu.banattila.jatek.Jatek;
 import hu.banattila.kivetelek.MaxSzemelyzetSzam;
+import hu.banattila.modellek.jatekok.Jatekok;
 import hu.banattila.modellek.reklamok.Reklamok;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -38,40 +40,76 @@ public class JatekKontroller {
     private Label uzenetek;
 
     @FXML
-    private Label szorolapAr;
+    private Pane reklamPanel;
 
     @FXML
-    private Label ujsaghirdetesAr;
+    private Label reklamAr;
 
     @FXML
-    private Label oriasplakatAr;
+    private Label latogatoNoveles;
 
     @FXML
-    private Label tvReklamAr;
+    private Label hatasfok;
 
     @FXML
-    private Label adSenseAr;
+    private Label megrendelve;
 
-    private String reklamAra(String melyike){
-        Reklamok reklam = Main.getJatek().getJatekos().getReklamok().stream().filter(
-                it -> it.getNev().equals(melyike)
-        ).findFirst().get();
-        return reklam.getKoltseg() + "";
+
+    @FXML
+    private void initReklamokLista() {
+        reklamok.add(szorolap);
+        reklamok.add(ujsaghirdetes);
+        reklamok.add(oriasplakat);
+        reklamok.add(tvReklam);
+        reklamok.add(adSense);
     }
 
-    private void setReklamokAra(){
-        szorolapAr.setText(reklamAra(ReklamNevek.SZOROLAPOZAS.getNev()));
-        ujsaghirdetesAr.setText(reklamAra(ReklamNevek.UJSAGHIRDETES.getNev()));
-        oriasplakatAr.setText(reklamAra(ReklamNevek.ORIASPLAKAT.getNev()));
-        tvReklamAr.setText(reklamAra(ReklamNevek.TVREKLAM.getNev()));
-        adSenseAr.setText(reklamAra(ReklamNevek.ADSENSE.getNev()));
+    private void initReklamok(){
+        ujsaghirdetes.setText(ReklamNevek.UJSAGHIRDETES.getNev());
+        szorolap.setText(ReklamNevek.SZOROLAPOZAS.getNev());
+        oriasplakat.setText(ReklamNevek.ORIASPLAKAT.getNev());
+        tvReklam.setText(ReklamNevek.TVREKLAM.getNev());
+        adSense.setText(ReklamNevek.ADSENSE.getNev());
+
     }
+
+    private void setReklamok() {
+        initReklamok();
+        for (Label reklam : reklamok) {
+            reklam.setOnMouseClicked( event ->{
+                Main.getJatek().jatekosReklamoz(reklam.getText());
+                if (Main.getJatek().getUzenet().get(Main.getJatek().getUzenet().size() - 1).contains("Sikeresen megrendelted")
+                        && Main.getJatek().getUzenet().get(Main.getJatek().getUzenet().size() - 1).contains(reklam.getText())) {
+                    Main.getJatek().getJatekos().reklamoz(reklam.getText());
+                    penz.setText("Pénzed: " + Main.getJatek().getJatekos().getPenz() + " fabatka");
+                    setUzik();
+                }
+            });
+
+            reklam.setOnMouseEntered( event -> {
+                Reklamok rm = Main.getJatek().getJatekos().getReklamok().stream()
+                        .filter(it -> it.getNev().equals(reklam.getText())).findFirst().get();
+                reklamAr.setText("Költsége: " + rm.getKoltseg());
+                latogatoNoveles.setText(rm.getUjLatogatokNaponta() + " fő");
+                hatasfok.setText(((double)rm.getUjLatogatokNaponta() / rm.getALAP_UJLATOGATOK() * 100) + "%");
+                megrendelve.setText((rm.isMegrendelve())? "Meg van rendelve" : "Nincs megrendelve");
+                reklamPanel.setVisible(true);
+            });
+            reklam.setOnMouseExited( event -> reklamPanel.setVisible(false));
+        }
+    }
+
+    private void reklamok() {
+        initReklamokLista();
+        setReklamok();
+    }
+
 
     @FXML
     private Label latogatok;
 
     private void setLatogatok(){
-        latogatok.setText("Napi látogatók: " + Jatek.getNapiLatogatok());
+        latogatok.setText("Napi látogatók: " + Jatek.getNapiLatogatok() + " fő");
     }
 
     @FXML
@@ -93,16 +131,16 @@ public class JatekKontroller {
     private Label adSense;
 
     @FXML
-    private CheckBox lali;
+    private CheckBox konyvelo;
 
     private void setKonyvelo(){
-        lali.setOnAction(event -> {
-            if (lali.isSelected()){
+        konyvelo.setOnAction(event -> {
+            if (konyvelo.isSelected()){
                 Main.getJatek().getJatekos().konyvelotAlkalmaz();
-                lali.setText(Main.getJatek().getJatekos().getKonyvelo().getNev());
+                konyvelo.setText(Main.getJatek().getJatekos().getKonyvelo().getNev());
 
-            } else if(!lali.isSelected()){
-                lali.setText("Nincs alkalmazásban");
+            } else if(!konyvelo.isSelected()){
+                konyvelo.setText("Nincs alkalmazásban");
                 Main.getJatek().getJatekos().konyvelotKirug();
             }
             setUzik();
@@ -124,20 +162,6 @@ public class JatekKontroller {
     @FXML
     private Label karbantarto5;
 
-    @FXML
-    private Label kirug1;
-
-    @FXML
-    private Label kirug2;
-
-    @FXML
-    private Label kirug3;
-
-    @FXML
-    private Label kirug4;
-
-    @FXML
-    private Label kirug5;
 
 
     private void setKarbantartoList(){
@@ -155,6 +179,29 @@ public class JatekKontroller {
 
     @FXML
     private TextField kitAlkalmaz;
+
+    @FXML
+    private TextField kitRugKi;
+
+    @FXML
+    private Button kirug;
+
+
+    private void karbantartotKirug(){
+        kirug.setOnMouseClicked( event -> {
+            for (Label karbantarto: karbantartok){
+                if (karbantarto.getText().equals(kitRugKi.getText())){
+                    Main.getJatek().getJatekos().karbantartotKirug(kitRugKi.getText());
+                    System.out.println(Main.getJatek().getJatekos());
+                    karbantarto.setText("Nincs alkalmazásban");
+                } else {
+                    Jatek.addUzenet("Nincs" + kitRugKi.getText() + " nevű alkalmazottad.");
+                    setUzik();
+                }
+                kitRugKi.setText("");
+            }
+        });
+    }
 
     private void disableAlkalmaz(){
         alkalmaz.setOnAction( event -> {
@@ -183,58 +230,13 @@ public class JatekKontroller {
     @FXML
     private Button alkalmaz;
 
+
     @FXML
-    private void initCheckBoxLista() {
-        reklamok.add(szorolap);
-        reklamok.add(ujsaghirdetes);
-        reklamok.add(oriasplakat);
-        reklamok.add(tvReklam);
-        reklamok.add(adSense);
-    }
+    private Pane panel;
 
-    private void initReklamok(){
-        ujsaghirdetes.setText(ReklamNevek.UJSAGHIRDETES.getNev());
-        szorolap.setText(ReklamNevek.SZOROLAPOZAS.getNev());
-        oriasplakat.setText(ReklamNevek.ORIASPLAKAT.getNev());
-        tvReklam.setText(ReklamNevek.TVREKLAM.getNev());
-        adSense.setText(ReklamNevek.ADSENSE.getNev());
-
-    }
-
-    private void setReklamok() {
-        initReklamok();
-        for (Label chB : reklamok) {
-            chB.setOnMouseClicked( event ->{
-                Main.getJatek().jatekosReklamoz(chB.getText());
-                if (Main.getJatek().getUzenet().get(Main.getJatek().getUzenet().size() - 1).contains("Sikeresen megrendelted")
-                        && Main.getJatek().getUzenet().get(Main.getJatek().getUzenet().size() - 1).contains(chB.getText())) {
-                    Main.getJatek().getJatekos().reklamoz(chB.getText());
-                    penz.setText("Pénzed: " + Main.getJatek().getJatekos().getPenz());
-                    chB.setDisable(true);
-                    setUzik();
-                }
-            });
-
-        }
-    }
-
-    private void reklamLejar() {
-        for (Label chB : reklamok) {
-            List<Reklamok>lejartak = Main.getJatek().getJatekos().getReklamok().stream().filter(
-                    it -> !it.isMegrendelve() && it.getNev().equals(chB.getText())
-            ).collect(Collectors.toList());
-            lejartak.forEach(it -> {
-                if (it.getNev().equals(chB.getText())){
-                    chB.setDisable(false);
-                }
-            });
-        }
-    }
-
-    private void reklamok() {
-        initCheckBoxLista();
-        setReklamok();
-        reklamLejar();
+    private void infoPanelNotVisible(){
+        panel.setVisible(false);
+        reklamPanel.setVisible(false);
     }
 
     private void setJatekok() {
@@ -247,18 +249,23 @@ public class JatekKontroller {
 
     private void setUzik() {
         StringBuilder uzenet = new StringBuilder();
-        for (String uzi : Main.getJatek().getUzenet()) {
-            uzenet.append(uzi).append("\n");
+        int counter = 0;
+        for (int i = Main.getJatek().getUzenet().size() - 1; i >= 0; i--) {
+            uzenet.append(Main.getJatek().getUzenet().get(i)).append("\n");
+            counter++;
+            if (counter == 5){
+                break;
+            }
         }
         uzenetek.setText(uzenet.toString());
     }
 
     private void setTexts() {
         nev.setText("" + Main.getJatek().getJatekos().getNev());
-        penz.setText("Pénzed: " + Main.getJatek().getJatekos().getPenz());
+        penz.setText("Pénzed: " + Main.getJatek().getJatekos().getPenz() + " fabatka");
         nap.setText(Main.getJatek().getElteltNapok() + ". nap");
         setUzik();
-        setReklamokAra();
+
     }
 
     private void setNapVege() {
@@ -273,10 +280,18 @@ public class JatekKontroller {
                     exception.printStackTrace();
                 }
             }
-            reklamLejar();
             setLatogatok();
         });
     }
+
+    @FXML
+    private Label szint;
+
+    @FXML
+    private Label ktg;
+
+    @FXML
+    private Label bevetel;
 
     @FXML
     private Button csonakazo;
@@ -284,9 +299,21 @@ public class JatekKontroller {
     private void setJatekEvent(Button btn, String mit) {
         btn.setOnAction(actionEvent -> {
             Main.getJatek().jatekosFejleszt(mit);
-            penz.setText("Pénzed: " + Main.getJatek().getJatekos().getPenz());
+            penz.setText("Pénzed: " + Main.getJatek().getJatekos().getPenz() + " fabatka");
             setUzik();
         });
+
+        btn.setOnMouseEntered( event -> {
+            panel.setVisible(true);
+            Jatekok jatek = Main.getJatek().getJatekos().getJatekok()
+                    .stream().
+                            filter( it-> it.getId().equals(btn.getId())).findFirst().get();
+            szint.setText("Jelenlegi szint: " + jatek.getSzint());
+            ktg.setText(jatek.getFejlesztesKoltseg() + "");
+            bevetel.setText("A napi bevételt noveli: " + jatek.getNyeresegLatogatonkent() + " fabatka/fő");
+        });
+
+        btn.setOnMouseExited( event -> panel.setVisible(false));
     }
 
     @FXML
@@ -310,5 +337,7 @@ public class JatekKontroller {
         setLatogatok();
         setKonyvelo();
         karbantartoAlkalmazasok();
+        karbantartotKirug();
+        infoPanelNotVisible();
     }
 }

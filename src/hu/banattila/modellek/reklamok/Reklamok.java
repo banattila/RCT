@@ -25,17 +25,20 @@ public abstract class Reklamok {
 
     private void init(JatekSzintek jatekSzintek, int koltseg, int ujLatogatokNaponta) {
         switch (jatekSzintek) {
-            case KONNYU -> {
+            case KONNYU: {
                 this.koltseg = koltseg;
                 this.ujLatogatokNaponta = ujLatogatokNaponta;
+                break;
             }
-            case KOZEPES -> {
+            case KOZEPES: {
                 this.koltseg = koltseg * 2;
                 this.ujLatogatokNaponta = ujLatogatokNaponta / 2;
+                break;
             }
-            case NEHEZ -> {
+            case NEHEZ: {
                 this.koltseg = koltseg * 4;
                 this.ujLatogatokNaponta = ujLatogatokNaponta / 4;
+                break;
             }
         }
     }
@@ -100,6 +103,10 @@ public abstract class Reklamok {
 
     public double getHatasfok() {
         return this.hatasfok;
+    }
+
+    public int getALAP_UJLATOGATOK() {
+        return ALAP_UJLATOGATOK;
     }
 
     @Override

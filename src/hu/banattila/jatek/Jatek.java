@@ -38,7 +38,6 @@ public class Jatek {
     private void napEltelik() {
         if (jatekVege()) {
             elteltNapok = 1000;
-            System.out.println("A játéknak vége, a játékos pénze: " + getJatekos().getPenz());
         } else {
             clearUzenetek();
             elteltNapok++;
@@ -47,17 +46,7 @@ public class Jatek {
             getUzenet().forEach(System.out::println);
             System.out.println();
             this.jatekos.setPenz(this.getJatekos().getPenz() + varhatoBevetel - varhatoKiadas);
-
-            System.out.println("------------------- A napnak vége lett ------------------------------------");
-            System.out.println("------------------- A napnak vége lett ------------------------------------");
-            System.out.println("------------------- A napnak vége lett ------------------------------------");
-            System.out.println("------------------ A várható napi bevétel: " + varhatoBevetel + " ----------------");
-            System.out.println("------------------ A várható napi kiadás: " + varhatoKiadas + " ----------------");
-
-
         }
-
-
     }
 
     private boolean jatekVege() {

@@ -27,14 +27,6 @@ public final class Jatekos {
         this.reklamok = ListaFactory.initReklamok(szint);
     }
 
-    public void kirug(Szemelyzet szemely) {
-        if (szemely instanceof Konyvelo) {
-            this.konyvelo = null;
-        } else {
-            this.karbantartok.removeIf(it -> it.getNev().equals(szemely.getNev()));
-        }
-    }
-
     public String fejlesztes(String mit){
         Jatekok jatek = this.jatekok.stream().filter(it -> it.getNev().equals(mit)).findFirst().get();
          return jatek.fejleszt(this);

@@ -6,6 +6,7 @@ import hu.banattila.kivetelek.NincsElegPenz;
 import hu.banattila.modellek.emberek.Jatekos;
 
 public abstract class Jatekok implements Fejleszt {
+    private final String id;
     private final int ALAP_NYERESEG_LATOGATONKENT;
     private final String nev;
     private int szint;
@@ -13,7 +14,8 @@ public abstract class Jatekok implements Fejleszt {
     private int fejlesztesKoltseg;
 
 
-    public Jatekok(String nev, int alap, JatekSzintek jatekSzintek) {
+    public Jatekok(String id, String nev, int alap, JatekSzintek jatekSzintek) {
+        this.id = id;
         this.nev = nev;
         this.szint = 0;
         switch (jatekSzintek) {
@@ -65,7 +67,7 @@ public abstract class Jatekok implements Fejleszt {
             if (this.getSzint() > 0){
                 this.setFejlesztesKoltseg(this.getFejlesztesKoltseg() * 2);
             }
-            eredmeny = "Fejlesztés sikeres!";
+            eredmeny = getNev() + " fejlesztése sikeres a " + getSzint() + ". szintre!";
         }
 
         return eredmeny;
@@ -112,6 +114,10 @@ public abstract class Jatekok implements Fejleszt {
 
     public void setFejlesztesKoltseg(int fejlesztesKoltseg) {
         this.fejlesztesKoltseg = fejlesztesKoltseg;
+    }
+
+    public String getId() {
+        return id;
     }
 
     @Override
