@@ -5,8 +5,8 @@ public enum JatekSzintek {
     KOZEPES("Közepes"),
     NEHEZ("Nehéz");
 
-    private String name;
-    private JatekSzintek(String name){
+    private final  String name;
+    JatekSzintek(String name){
         this.name = name;
     }
 

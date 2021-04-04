@@ -35,10 +35,10 @@ public class UjJatekKontroller {
     private void kezdes(){
         kezd.setOnAction( event ->{
             jatekosNev = nev.getText();
-            switch (nehezseg.getValue()){
-                case "Könnyű": szint = JatekSzintek.KONNYU; break;
-                case "Közepes": szint = JatekSzintek.KOZEPES; break;
-                case "Nehéz": szint = JatekSzintek.NEHEZ; break;
+            switch (nehezseg.getValue()) {
+                case "Könnyű" -> szint = JatekSzintek.KONNYU;
+                case "Közepes" -> szint = JatekSzintek.KOZEPES;
+                case "Nehéz" -> szint = JatekSzintek.NEHEZ;
             }
             Main.setJatek(new Jatek(jatekosNev, szint));
             try {

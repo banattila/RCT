@@ -17,7 +17,7 @@ public class Jatek {
     private static int napiLatogatok;
     private static int varhatoBevetel;
     private static int varhatoKiadas;
-    private List<String> uzenet;
+    private final List<String> uzenet;
 
     public Jatek(String jatekosNev, JatekSzintek szint) {
         this.szint = szint;

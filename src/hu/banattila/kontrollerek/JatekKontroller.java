@@ -3,13 +3,12 @@ package hu.banattila.kontrollerek;
 import hu.banattila.Main;
 import hu.banattila.enumok.JatekNevek;
 import hu.banattila.enumok.ReklamNevek;
+import hu.banattila.jatek.Jatek;
 import hu.banattila.modellek.reklamok.Reklamok;
-import hu.banattila.modellek.reklamok.UjsagHirdetes;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 
 import java.io.IOException;
@@ -22,8 +21,7 @@ public class JatekKontroller {
     public JatekKontroller() {
     }
 
-    ObservableList<String> uzenetek2 = FXCollections.observableArrayList(Main.getJatek().getUzenet());
-    List<CheckBox> checkBoxes = new ArrayList<>();
+    List<Label> checkBoxes = new ArrayList<>();
 
     @FXML
     private Label nev;
@@ -52,27 +50,45 @@ public class JatekKontroller {
     @FXML
     private Label adSenseAr;
 
-    private void setTvReklamAr(String ar){
-        szorolapAr.setText(ar);
+    private String reklamAra(String melyike){
+        Reklamok reklam = Main.getJatek().getJatekos().getReklamok().stream().filter(
+                it -> it.getNev().equals(melyike)
+        ).findFirst().get();
+        return reklam.getKoltseg() + "";
+    }
+
+    private void setReklamokAra(){
+        szorolapAr.setText(reklamAra(ReklamNevek.SZOROLAPOZAS.getNev()));
+        ujsaghirdetesAr.setText(reklamAra(ReklamNevek.UJSAGHIRDETES.getNev()));
+        oriasplakatAr.setText(reklamAra(ReklamNevek.ORIASPLAKAT.getNev()));
+        tvReklamAr.setText(reklamAra(ReklamNevek.TVREKLAM.getNev()));
+        adSenseAr.setText(reklamAra(ReklamNevek.ADSENSE.getNev()));
+    }
+
+    @FXML
+    private Label latogatok;
+
+    private void setLatogatok(){
+        latogatok.setText("Napi látogatók: " + Jatek.getNapiLatogatok());
     }
 
     @FXML
     private Button napVege;
 
     @FXML
-    private CheckBox szorolap;
+    private Label szorolap;
 
     @FXML
-    private CheckBox ujsaghirdetes;
+    private Label ujsaghirdetes;
 
     @FXML
-    private CheckBox oriasplakat;
+    private Label oriasplakat;
 
     @FXML
-    private CheckBox tvReklam;
+    private Label tvReklam;
 
     @FXML
-    private CheckBox adSense;
+    private Label adSense;
 
     @FXML
     private void initCheckBoxLista() {
@@ -94,8 +110,8 @@ public class JatekKontroller {
 
     private void setReklamok() {
         initReklamok();
-        for (CheckBox chB : checkBoxes) {
-            chB.setOnAction(event -> {
+        for (Label chB : checkBoxes) {
+            chB.setOnMouseClicked( event ->{
                 Main.getJatek().jatekosReklamoz(chB.getText());
                 if (Main.getJatek().getUzenet().get(Main.getJatek().getUzenet().size() - 1).contains("Sikeresen megrendelted")
                         && Main.getJatek().getUzenet().get(Main.getJatek().getUzenet().size() - 1).contains(chB.getText())) {
@@ -105,15 +121,16 @@ public class JatekKontroller {
                     setUzik();
                 }
             });
+
         }
     }
 
     private void reklamLejar() {
-        for (CheckBox chB : checkBoxes) {
+        for (Label chB : checkBoxes) {
             List<Reklamok>lejartak = Main.getJatek().getJatekos().getReklamok().stream().filter(
                     it -> !it.isMegrendelve() && it.getNev().equals(chB.getText())
             ).collect(Collectors.toList());
-            lejartak.stream().forEach(it -> {
+            lejartak.forEach(it -> {
                 if (it.getNev().equals(chB.getText())){
                     chB.setDisable(false);
                 }
@@ -136,11 +153,11 @@ public class JatekKontroller {
     }
 
     private void setUzik() {
-        String uzenet = "";
+        StringBuilder uzenet = new StringBuilder();
         for (String uzi : Main.getJatek().getUzenet()) {
-            uzenet += uzi + "\n";
+            uzenet.append(uzi).append("\n");
         }
-        uzenetek.setText(uzenet);
+        uzenetek.setText(uzenet.toString());
     }
 
     private void setTexts() {
@@ -148,6 +165,7 @@ public class JatekKontroller {
         penz.setText("Pénzed: " + Main.getJatek().getJatekos().getPenz());
         nap.setText(Main.getJatek().getElteltNapok() + ". nap");
         setUzik();
+        setReklamokAra();
     }
 
     private void setNapVege() {
@@ -163,6 +181,7 @@ public class JatekKontroller {
                 }
             }
             reklamLejar();
+            setLatogatok();
         });
     }
 
@@ -195,7 +214,7 @@ public class JatekKontroller {
         setNapVege();
         setJatekok();
         reklamok();
-
+        setLatogatok();
 
     }
 }

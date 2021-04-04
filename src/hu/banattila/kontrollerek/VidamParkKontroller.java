@@ -21,13 +21,17 @@ public class VidamParkKontroller {
     public VidamParkKontroller() {
     }
 
-    @FXML
-    public void newGame(){
-        try {
-            Main.setRoot("fxml/ujJatek");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    private void newGame(){
+        newGame.setOnAction( event -> {
+            try {
+                Main.setRoot("fxml/ujJatek");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
-
+    @FXML
+    private void initialize(){
+        newGame();
+    }
 }

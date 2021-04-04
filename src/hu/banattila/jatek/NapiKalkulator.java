@@ -71,16 +71,16 @@ public class NapiKalkulator {
                     uzenetek.add(beset.get(balesetIndex).getNev());
                 }
             }
-            for (int jatekokIndex = 0; jatekokIndex < jatekok.size(); jatekokIndex++){
-                if (jatekok.get(jatekokIndex).getSzint() > 0){
-                    if (beset.get(balesetIndex).getHozzaTartozoJatek().equals(jatekok.get(jatekokIndex).getNev())){
+            for (Jatekok value : jatekok) {
+                if (value.getSzint() > 0) {
+                    if (beset.get(balesetIndex).getHozzaTartozoJatek().equals(value.getNev())) {
                         double esely = rand.nextDouble() * 99;
-                        if (!jatekos.getKarbantartok().isEmpty()){
-                            for (Karbantarto karbantarto: jatekos.getKarbantartok()){
-                                esely *= 1.0 + (double)karbantarto.getEselyCsokkentesre() / 100;
+                        if (!jatekos.getKarbantartok().isEmpty()) {
+                            for (Karbantarto karbantarto : jatekos.getKarbantartok()) {
+                                esely *= 1.0 + (double) karbantarto.getEselyCsokkentesre() / 100;
                             }
                         }
-                        if (esely < beset.get(balesetIndex).getEsely()){
+                        if (esely < beset.get(balesetIndex).getEsely()) {
                             eredmeny += beset.get(balesetIndex).getKiadas();
                             Jatek.setNapiLatogatok(Jatek.getNapiLatogatok() - beset.get(balesetIndex).getLatogatoCsokkenes());
                             uzenetek.add(beset.get(balesetIndex).getNev());

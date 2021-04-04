@@ -55,6 +55,8 @@ public abstract class Jatekok implements Fejleszt {
         }
 
         if (penzEllenorzes) {
+            setNyeresegLatogatonkent(this.getNyeresegLatogatonkent() + this.ALAP_NYERESEG_LATOGATONKENT);
+            jatekos.setPenz(jatekos.getPenz() - this.getFejlesztesKoltseg());
             try {
                 this.setSzint(this.getSzint() + 1);
             } catch (MaximumJatekSzint e) {
@@ -63,8 +65,6 @@ public abstract class Jatekok implements Fejleszt {
             if (this.getSzint() > 0){
                 this.setFejlesztesKoltseg(this.getFejlesztesKoltseg() * 2);
             }
-            setNyeresegLatogatonkent(this.getNyeresegLatogatonkent() + this.ALAP_NYERESEG_LATOGATONKENT);
-            jatekos.setPenz(jatekos.getPenz() - this.getFejlesztesKoltseg());
             eredmeny = "Fejlesztés sikeres!";
         }
 

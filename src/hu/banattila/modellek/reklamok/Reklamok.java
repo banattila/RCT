@@ -7,7 +7,7 @@ public abstract class Reklamok {
 
     private final String nev;
     private int hanyadikNapja;
-    private double hatasfok;
+    private final double hatasfok;
     private final int idoTartam;
     private final int ALAP_UJLATOGATOK;
     private int ujLatogatokNaponta;
@@ -28,17 +28,14 @@ public abstract class Reklamok {
             case KONNYU -> {
                 this.koltseg = koltseg;
                 this.ujLatogatokNaponta = ujLatogatokNaponta;
-                break;
             }
             case KOZEPES -> {
                 this.koltseg = koltseg * 2;
                 this.ujLatogatokNaponta = ujLatogatokNaponta / 2;
-                break;
             }
             case NEHEZ -> {
                 this.koltseg = koltseg * 4;
                 this.ujLatogatokNaponta = ujLatogatokNaponta / 4;
-                break;
             }
         }
     }
@@ -49,7 +46,7 @@ public abstract class Reklamok {
         if (!ervenyes) {
             this.hanyadikNapja = 0;
             this.megrendelve = false;
-        } else if (ervenyes && megrendelve) {
+        } else if (megrendelve) {
             incHanyadikNapja();
             eredmeny += getUjLatogatokNaponta();
         }
@@ -107,14 +104,13 @@ public abstract class Reklamok {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getNev())
-                .append("-t maximum ")
-                .append(getIdoTartam())
-                .append(" napra tudod alkalmazni. ")
-                .append(getUjLatogatokNaponta() + " új látogatót tud hozni naponta. \tJelenleg")
-                .append((megrendelve) ? " meg van rendelve " + getHanyadikNapja() + " napja." : " nincs megrendelve.");
 
-        return sb.toString();
+        return getNev() +
+                "-t maximum " +
+                getIdoTartam() +
+                " napra tudod alkalmazni. " +
+                getUjLatogatokNaponta() +
+                " új látogatót tud hozni naponta. \tJelenleg" +
+                ((megrendelve) ? " meg van rendelve " + getHanyadikNapja() + " napja." : " nincs megrendelve.");
     }
 }
