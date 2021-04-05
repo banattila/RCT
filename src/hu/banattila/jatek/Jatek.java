@@ -43,8 +43,6 @@ public class Jatek {
             elteltNapok++;
             bevetelKalk();
             kiadasok();
-            getUzenet().forEach(System.out::println);
-            System.out.println();
             this.jatekos.setPenz(this.getJatekos().getPenz() + varhatoBevetel - varhatoKiadas);
         }
     }
@@ -66,11 +64,11 @@ public class Jatek {
     }
 
     public void jatekosReklamoz(String mit) {
-        this.uzenet.add(this.jatekos.reklamoz(mit));
+        uzenet.add(this.jatekos.reklamoz(mit));
     }
 
     public void jatekosFejleszt(String mit) {
-        this.uzenet.add(this.jatekos.fejlesztes(mit));
+        uzenet.add(this.jatekos.fejlesztes(mit));
     }
 
     public Jatekos getJatekos() {
@@ -90,11 +88,11 @@ public class Jatek {
     }
 
     public List<String> getUzenet() {
-        return this.uzenet;
+        return uzenet;
     }
 
     public void clearUzenetek() {
-        this.uzenet.clear();
+        uzenet.clear();
     }
 
     public static void addUzenet(String mit) {

@@ -1,9 +1,22 @@
+.label{
+    -fx-fill: blue;
+}
+
+.infopanel {
+    -fx-background-color: burlywood;
+}
+
+.reklamok {
+    -fx-fill: red;
+}
+
 .pane{
-    -fx-background-color: #c1ffa5;
+    -fx-background-image: url("imgs/vidampark.jpeg");
 }
 
 .menu {
     -fx-background-color: #a5fffc;
+    -fx-opacity: 0.3;
 }
 
 .btn {
@@ -19,4 +32,28 @@
 .btn:hover{
     -fx-background-color: #ddffff;
     -fx-opacity: 0.5;
+}
+
+#vattacukros{
+    -fx-background-image: url("imgs/vattacukros.jpeg");
+}
+
+#hullamvasut{
+    -fx-background-image: url("imgs/hullamvasut.jpeg");
+}
+
+#szellemvasut{
+    -fx-background-image: url("imgs/szellemvasut.jpeg");
+}
+
+#korhinta{
+    -fx-background-image: url("imgs/korhinta.jpeg");
+}
+
+#csonakazo{
+    -fx-background-image: url("imgs/csonakazo.jpeg");
+}
+
+#napVege{
+    -fx-background-image: url("imgs/homokora.jpeg");
 }

@@ -15,6 +15,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,6 +27,7 @@ public class JatekKontroller {
 
     List<Label> reklamok = new ArrayList<>();
     List<Label> karbantartok = new ArrayList<>();
+    DecimalFormat df = new DecimalFormat("###,###,###");
 
     @FXML
     private Label nev;
@@ -81,7 +83,8 @@ public class JatekKontroller {
                 if (Main.getJatek().getUzenet().get(Main.getJatek().getUzenet().size() - 1).contains("Sikeresen megrendelted")
                         && Main.getJatek().getUzenet().get(Main.getJatek().getUzenet().size() - 1).contains(reklam.getText())) {
                     Main.getJatek().getJatekos().reklamoz(reklam.getText());
-                    penz.setText("Pénzed: " + Main.getJatek().getJatekos().getPenz() + " fabatka");
+                    penz.setText("Pénzed: " + df.format(Main.getJatek().getJatekos().getPenz())  + " fabatka");
+                    reklam.setStyle("-fx-fill: red");
                     setUzik();
                 }
             });
@@ -89,9 +92,9 @@ public class JatekKontroller {
             reklam.setOnMouseEntered( event -> {
                 Reklamok rm = Main.getJatek().getJatekos().getReklamok().stream()
                         .filter(it -> it.getNev().equals(reklam.getText())).findFirst().get();
-                reklamAr.setText("Költsége: " + rm.getKoltseg());
+                reklamAr.setText("Költsége: " + df.format(rm.getKoltseg()));
                 latogatoNoveles.setText(rm.getUjLatogatokNaponta() + " fő");
-                hatasfok.setText(((double)rm.getUjLatogatokNaponta() / rm.getALAP_UJLATOGATOK() * 100) + "%");
+                hatasfok.setText(String.format("%.2f", ((double)rm.getUjLatogatokNaponta() / rm.getALAP_UJLATOGATOK() * 100)) + "%");
                 megrendelve.setText((rm.isMegrendelve())? "Meg van rendelve" : "Nincs megrendelve");
                 reklamPanel.setVisible(true);
             });
@@ -109,7 +112,7 @@ public class JatekKontroller {
     private Label latogatok;
 
     private void setLatogatok(){
-        latogatok.setText("Napi látogatók: " + Jatek.getNapiLatogatok() + " fő");
+        latogatok.setText("Napi látogatók: " + df.format(Jatek.getNapiLatogatok() )+ " fő");
     }
 
     @FXML
@@ -192,14 +195,13 @@ public class JatekKontroller {
             for (Label karbantarto: karbantartok){
                 if (karbantarto.getText().equals(kitRugKi.getText())){
                     Main.getJatek().getJatekos().karbantartotKirug(kitRugKi.getText());
-                    System.out.println(Main.getJatek().getJatekos());
                     karbantarto.setText("Nincs alkalmazásban");
                 } else {
-                    Jatek.addUzenet("Nincs" + kitRugKi.getText() + " nevű alkalmazottad.");
+                    Jatek.addUzenet("Nincs " + kitRugKi.getText() + " nevű alkalmazottad.");
                     setUzik();
                 }
-                kitRugKi.setText("");
             }
+            kitRugKi.setText("");
         });
     }
 
@@ -262,7 +264,7 @@ public class JatekKontroller {
 
     private void setTexts() {
         nev.setText("" + Main.getJatek().getJatekos().getNev());
-        penz.setText("Pénzed: " + Main.getJatek().getJatekos().getPenz() + " fabatka");
+        penz.setText("Pénzed: " + df.format(Main.getJatek().getJatekos().getPenz()) + " fabatka");
         nap.setText(Main.getJatek().getElteltNapok() + ". nap");
         setUzik();
 
@@ -285,6 +287,9 @@ public class JatekKontroller {
     }
 
     @FXML
+    private Label jatekNev;
+
+    @FXML
     private Label szint;
 
     @FXML
@@ -299,7 +304,7 @@ public class JatekKontroller {
     private void setJatekEvent(Button btn, String mit) {
         btn.setOnAction(actionEvent -> {
             Main.getJatek().jatekosFejleszt(mit);
-            penz.setText("Pénzed: " + Main.getJatek().getJatekos().getPenz() + " fabatka");
+            penz.setText("Pénzed: " + df.format(Main.getJatek().getJatekos().getPenz()) + " fabatka");
             setUzik();
         });
 
@@ -308,9 +313,10 @@ public class JatekKontroller {
             Jatekok jatek = Main.getJatek().getJatekos().getJatekok()
                     .stream().
                             filter( it-> it.getId().equals(btn.getId())).findFirst().get();
+            jatekNev.setText(jatek.getNev());
             szint.setText("Jelenlegi szint: " + jatek.getSzint());
-            ktg.setText(jatek.getFejlesztesKoltseg() + "");
-            bevetel.setText("A napi bevételt noveli: " + jatek.getNyeresegLatogatonkent() + " fabatka/fő");
+            ktg.setText(df.format(jatek.getFejlesztesKoltseg()) + " fabatka");
+            bevetel.setText("A napi bevételt noveli: " + df.format(jatek.getNyeresegLatogatonkent()) + " fabatka/fő");
         });
 
         btn.setOnMouseExited( event -> panel.setVisible(false));
