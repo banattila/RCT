@@ -30,11 +30,6 @@ public class Jatek {
         elteltNapok = 1;
     }
 
-    // majd a mentések betöltéséhez fog kelleni, de kiegészítve több mindennel, csak el ne felejtsem:)
-/*    public Jatek(JatekSzintek szint){
-        this.szint = szint;
-    }
-*/
     private void napEltelik() {
         if (jatekVege()) {
             elteltNapok = 1000;
@@ -73,6 +68,10 @@ public class Jatek {
 
     public Jatekos getJatekos() {
         return jatekos;
+    }
+
+    public void setElteltNapok(int elteltNapok) {
+        Jatek.elteltNapok = elteltNapok;
     }
 
     public int getElteltNapok() {

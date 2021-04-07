@@ -19,7 +19,7 @@ public abstract class Baleset {
         switch (szint){
             case KONNYU: break;
             case KOZEPES: esely *= 1.5; break;
-            case NEHEZ: esely *= 2; break;
+            case NEHEZ: esely *= 1.5; esely *= 1.5 ;break;
         }
         this.esely = esely;
     }

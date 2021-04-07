@@ -55,6 +55,7 @@ public class UjJatekKontroller {
     @FXML
     private void initialize(){
         nehezseg.setItems(szintek);
+        nehezseg.setValue(JatekSzintek.KONNYU.getName());
         kezdes();
 
     }

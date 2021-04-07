@@ -1,0 +1,9 @@
+Játéknap:7
+Játékszint:Könnyű
+NapiLlátogatők:390
+Játékos név:attila
+Játékos pénze:48662
+Könyvelő:van
+Karbantartók:jani
+Aktív reklámok:
+Játékok:szellemvasut,0,80,400000;korhinta,0,20,100000;csonakazo,0,40,200000;vattacukros,2,30,200000;hullamvasut,0,160,800000;

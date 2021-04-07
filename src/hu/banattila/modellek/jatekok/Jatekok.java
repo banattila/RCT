@@ -39,8 +39,10 @@ public abstract class Jatekok implements Fejleszt {
                 break;
             case KOZEPES:
                 setFejlesztesKoltseg(kozepes);
+                break;
             case NEHEZ:
                 setFejlesztesKoltseg(nehez);
+                break;
         }
     }
 
@@ -64,9 +66,8 @@ public abstract class Jatekok implements Fejleszt {
             } catch (MaximumJatekSzint e) {
                 return e.getMessage();
             }
-            if (this.getSzint() > 0){
-                this.setFejlesztesKoltseg(this.getFejlesztesKoltseg() * 2);
-            }
+            this.setFejlesztesKoltseg(this.getFejlesztesKoltseg() * 2);
+
             eredmeny = getNev() + " fejlesztése sikeres a " + getSzint() + ". szintre!";
         }
 

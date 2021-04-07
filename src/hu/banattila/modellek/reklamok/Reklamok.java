@@ -7,7 +7,7 @@ public abstract class Reklamok {
 
     private final String nev;
     private int hanyadikNapja;
-    private final double hatasfok;
+    private double hatasfok;
     private final int idoTartam;
     private final int ALAP_UJLATOGATOK;
     private int ujLatogatokNaponta;
@@ -18,25 +18,23 @@ public abstract class Reklamok {
         this.nev = nev;
         this.idoTartam = idoTartam;
         this.megrendelve = false;
-        this.ALAP_UJLATOGATOK = ujLatogatokNaponta;
-        init(jatekSzintek, koltseg, ujLatogatokNaponta);
+        this.koltseg = koltseg;
+        init(jatekSzintek, ujLatogatokNaponta);
+        this.ALAP_UJLATOGATOK = this.ujLatogatokNaponta;
         this.hatasfok = 100.0;
     }
 
-    private void init(JatekSzintek jatekSzintek, int koltseg, int ujLatogatokNaponta) {
+    private void init(JatekSzintek jatekSzintek, int ujLatogatokNaponta) {
         switch (jatekSzintek) {
             case KONNYU: {
-                this.koltseg = koltseg;
                 this.ujLatogatokNaponta = ujLatogatokNaponta;
                 break;
             }
             case KOZEPES: {
-                this.koltseg = koltseg * 2;
                 this.ujLatogatokNaponta = ujLatogatokNaponta / 2;
                 break;
             }
             case NEHEZ: {
-                this.koltseg = koltseg * 4;
                 this.ujLatogatokNaponta = ujLatogatokNaponta / 4;
                 break;
             }
@@ -53,7 +51,7 @@ public abstract class Reklamok {
             incHanyadikNapja();
             eredmeny += getUjLatogatokNaponta();
         }
-        setUjLatogatokNaponta();
+        ujlatogatoKalk();
         return eredmeny;
     }
 
@@ -61,11 +59,13 @@ public abstract class Reklamok {
         this.hanyadikNapja++;
     }
 
-    public void setUjLatogatokNaponta() {
+    public void ujlatogatoKalk() {
         if (megrendelve) {
             this.ujLatogatokNaponta = (int) (getUjLatogatokNaponta() * 0.9);
+            setHatasfok(getHatasfok() * 0.9);
         } else {
             this.ujLatogatokNaponta = (int) (getUjLatogatokNaponta() * 1.1);
+            setHatasfok(getHatasfok() * 1.1);
         }
 
         if (getUjLatogatokNaponta() > ALAP_UJLATOGATOK){
@@ -89,6 +89,8 @@ public abstract class Reklamok {
         return this.ujLatogatokNaponta;
     }
 
+    public void setUjLatogatokNaponta(int ujLatogatokNaponta) { this.ujLatogatokNaponta = ujLatogatokNaponta;}
+
     public int getHanyadikNapja() {
         return this.hanyadikNapja;
     }
@@ -107,6 +109,26 @@ public abstract class Reklamok {
 
     public int getALAP_UJLATOGATOK() {
         return ALAP_UJLATOGATOK;
+    }
+
+    public void setHanyadikNapja(int hanyadikNapja) {
+        this.hanyadikNapja = hanyadikNapja;
+    }
+
+    public void setKoltseg(int koltseg) {
+        this.koltseg = koltseg;
+    }
+
+    public void setMegrendelve(boolean megrendelve) {
+        this.megrendelve = megrendelve;
+    }
+
+    public void setHatasfok(double hatasfok) {
+        if (hatasfok > 100.0){
+            this.hatasfok = 100.0;
+        } else {
+            this.hatasfok = hatasfok;
+        }
     }
 
     @Override

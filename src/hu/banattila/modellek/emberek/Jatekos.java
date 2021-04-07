@@ -14,10 +14,10 @@ import java.util.Set;
 public final class Jatekos {
     private String nev;
     private long penz;
-    private final Set<Jatekok> jatekok;
-    private final List<Karbantarto> karbantartok;
+    private  Set<Jatekok> jatekok;
+    private  List<Karbantarto> karbantartok;
     private Konyvelo konyvelo;
-    private final Set<Reklamok> reklamok;
+    private  Set<Reklamok> reklamok;
 
     public Jatekos(String nev, JatekSzintek szint) {
         this.nev = nev;
@@ -52,6 +52,31 @@ public final class Jatekos {
 
     }
 
+    public void konyvelotAlkalmaz(){
+        if (this.konyvelo == null){
+            this.konyvelo = Konyvelo.konyvelotAlkalmaz();
+        } else {
+            Jatek.addUzenet("Már alkalmazod " + getKonyvelo().getNev() + "-t.");
+        }
+    }
+
+    public void karbantartotKirug(String kit){
+        getKarbantartok().removeIf(ember -> ember.getNev().equals(kit));
+    }
+
+    public void konyvelotKirug(){
+        Jatek.addUzenet("Kirúgtad " + getKonyvelo().getNev() + "t, a könyvelődet.");
+        this.konyvelo = null;
+    }
+
+    public void karbantartotFelvesz(String kit) throws MaxSzemelyzetSzam {
+        if (this.karbantartok.size() < 5) {
+            this.karbantartok.add(new Karbantarto(kit));
+        } else {
+            throw new MaxSzemelyzetSzam("karbantarto");
+        }
+    }
+
     public Set<Reklamok> getReklamok(){
         return this.reklamok;
     }
@@ -83,33 +108,28 @@ public final class Jatekos {
         return karbantartok;
     }
 
-    public void konyvelotAlkalmaz(){
-        if (this.konyvelo == null){
-            this.konyvelo = Konyvelo.konyvelotAlkalmaz();
-        } else {
-            Jatek.addUzenet("Már alkalmazod " + getKonyvelo().getNev() + "-t.");
-        }
+    public void setJatekok(Set<Jatekok> jatekok) {
+        this.jatekok = jatekok;
     }
 
-    public void karbantartotKirug(String kit){
-        getKarbantartok().removeIf(ember -> ember.getNev().equals(kit));
+    public void setKarbantartok(List<Karbantarto> karbantartok) {
+        this.karbantartok = karbantartok;
     }
 
-    public void konyvelotKirug(){
-        Jatek.addUzenet("Kirúgtad " + getKonyvelo().getNev() + "t, a könyvelődet.");
-        this.konyvelo = null;
+    public void setKonyvelo(Konyvelo konyvelo) {
+        this.konyvelo = konyvelo;
     }
 
-    public void karbantartotFelvesz(String kit) throws MaxSzemelyzetSzam {
-        if (this.karbantartok.size() < 5) {
-            this.karbantartok.add(new Karbantarto(kit));
-        } else {
-            throw new MaxSzemelyzetSzam("karbantarto");
-        }
+    public void setReklamok(Set<Reklamok> reklamok) {
+        this.reklamok = reklamok;
     }
 
     public Konyvelo getKonyvelo() {
         return konyvelo;
+    }
+
+    public void setKonyvelo() {
+        this.konyvelo = Konyvelo.konyvelotAlkalmaz();
     }
 
     @Override

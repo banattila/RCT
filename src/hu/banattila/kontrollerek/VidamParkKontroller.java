@@ -1,6 +1,7 @@
 package hu.banattila.kontrollerek;
 
 import hu.banattila.Main;
+import hu.banattila.mentes.Mentesek;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -30,8 +31,19 @@ public class VidamParkKontroller {
             }
         });
     }
+
+    private void loadGame(){
+        loadGame.setOnAction( event -> {
+            try {
+                Main.setRoot("fxml/jatekBetoltes");
+            } catch (IOException e){
+                e.printStackTrace();
+            }
+        });
+    }
     @FXML
     private void initialize(){
         newGame();
+        loadGame();
     }
 }
