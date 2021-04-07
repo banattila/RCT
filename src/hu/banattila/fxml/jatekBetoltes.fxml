@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hu.banattila.kontrollerek.JatekBetoltesKontroller">
+   <children>
+      <ListView fx:id="uzenetek" layoutX="234.0" layoutY="313.0" prefHeight="200.0" prefWidth="200.0" />
+   </children>
+</AnchorPane>
