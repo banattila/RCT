@@ -1,59 +1,128 @@
-.label{
-    -fx-fill: blue;
-}
 
 .infopanel {
     -fx-background-color: burlywood;
+}
+
+.megrendelt {
+    -fx-text-fill: red;
 }
 
 .reklamok {
     -fx-fill: red;
 }
 
-.pane{
-    -fx-background-image: url("imgs/vidampark.jpeg");
+AnchorPane {
+    -fx-background-color: aquamarine;
 }
 
 .menu {
     -fx-background-color: #a5fffc;
-    -fx-opacity: 0.3;
 }
 
-.btn {
-    -fx-background-color: #99ffff;
+Button {
+    -fx-background-color: black;
     -fx-background-radius: 3 3 3 3;
     -fx-font-size: 1.2em;
+    -fx-text-fill: orange;
     -fx-padding: 10px;
-    -fx-border-color: black;
-    -fx-border-width: 0 3 3 0;
-    -fx-border-radius: 10px ;
 }
 
-.btn:hover{
-    -fx-background-color: #ddffff;
-    -fx-opacity: 0.5;
+Button:hover {
+    -fx-text-fill: #ff6f6f;
 }
 
-#vattacukros{
+#vattacukros {
     -fx-background-image: url("imgs/vattacukros.jpeg");
 }
 
-#hullamvasut{
+#hullamvasut {
     -fx-background-image: url("imgs/hullamvasut.jpeg");
 }
 
-#szellemvasut{
+#szellemvasut {
     -fx-background-image: url("imgs/szellemvasut.jpeg");
 }
 
-#korhinta{
+#korhinta {
     -fx-background-image: url("imgs/korhinta.jpeg");
 }
 
-#csonakazo{
+#csonakazo {
     -fx-background-image: url("imgs/csonakazo.jpeg");
 }
 
-#napVege{
+#napVege {
     -fx-background-image: url("imgs/homokora.jpeg");
+}
+
+.list-cell:filled:selected:focused, .list-cell:filled:selected {
+    -fx-background-color: linear-gradient(#333 0%, #777 25%, #aaa 75%, #eee 100%);
+    -fx-text-fill: #ff1a43;
+}
+
+.list-cell {
+    -fx-text-fill: black;
+}
+
+.list-cell:odd {
+    -fx-background-color: white;
+}
+
+.list-cell:even {
+    -fx-background-color: #5e9dff;
+}
+
+.list-cell:filled:hover {
+    -fx-background-color: #5e9dff;
+    -fx-text-fill: white;
+}
+
+TextField {
+    -fx-background-color: black;
+    -fx-text-fill: orange;
+    -fx-border-color: orange;
+    -fx-border-radius: 3px 3px;
+}
+
+Label {
+    -fx-font-style: italic;
+}
+
+.check-box .box {
+    -fx-background-color: grey;
+    -fx-border-color: grey;
+    -fx-border-radius: 3px;
+}
+
+.check-box:selected .mark {
+    -fx-background-color: white;
+}
+
+.check-box:selected .box {
+    -fx-background-color: #28a3f4;
+}
+
+.choice-box .context-menu {
+    -fx-background-color: black;
+}
+
+.choice-box .menu-item:focused {
+    -fx-background-color: orange;
+}
+
+.choice-box .menu-item > .label {
+    -fx-text-fill: white;
+}
+
+.choice-box .menu-item:focused > .label {
+    -fx-text-fill: black;
+}
+
+.choice-box {
+    -fx-background-color: black;
+    -fx-mark-color: orange;
+}
+
+.choice-box > .label {
+    -fx-text-fill: white;
 }

@@ -24,12 +24,12 @@ public class Mentesek {
     }
 
     public static String mentes(Jatek jatek){
-        String eredmeny = "Sikertelen mentés!";
+        String eredmeny = "Sikeres mentés!";
         BufferedWriter bw = null;
 
         try {
             String fileName = ".mentesek/" + jatek.getJatekos().getNev() + "-"
-                    + jatek.getSzint().getName() + "_nap.txt";
+                    + jatek.getSzint().getName()+ ".txt";
             File f = new File(".mentesek");
             if (!f.exists() && !f.isDirectory()){
                 f.mkdir();
@@ -143,7 +143,7 @@ public class Mentesek {
             jatek = new Jatek(jatekosnev, szint);
             jatek.setElteltNapok(elteltnap);
             Jatek.setNapiLatogatok(latogatok);
-            jatekosPenze = Integer.parseInt(splitter(br));
+            jatekosPenze = Long.parseLong(splitter(br));
             jatek.getJatekos().setPenz(jatekosPenze);
 
             vanKonyvelo = splitter(br);

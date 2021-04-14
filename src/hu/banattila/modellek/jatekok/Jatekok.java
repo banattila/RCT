@@ -60,9 +60,9 @@ public abstract class Jatekok implements Fejleszt {
 
         if (penzEllenorzes) {
             setNyeresegLatogatonkent(this.getNyeresegLatogatonkent() + this.ALAP_NYERESEG_LATOGATONKENT);
-            jatekos.setPenz(jatekos.getPenz() - this.getFejlesztesKoltseg());
             try {
                 this.setSzint(this.getSzint() + 1);
+                jatekos.setPenz(jatekos.getPenz() - this.getFejlesztesKoltseg());
             } catch (MaximumJatekSzint e) {
                 return e.getMessage();
             }

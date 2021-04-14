@@ -1,6 +1,5 @@
 package hu.banattila.modellek.emberek;
 
-
 import hu.banattila.enumok.JatekSzintek;
 import hu.banattila.jatek.Jatek;
 import hu.banattila.kivetelek.MaxSzemelyzetSzam;
@@ -114,10 +113,6 @@ public final class Jatekos {
 
     public void setKarbantartok(List<Karbantarto> karbantartok) {
         this.karbantartok = karbantartok;
-    }
-
-    public void setKonyvelo(Konyvelo konyvelo) {
-        this.konyvelo = konyvelo;
     }
 
     public void setReklamok(Set<Reklamok> reklamok) {

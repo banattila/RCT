@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hu.banattila.kontrollerek.FinishController">
+   <children>
+      <Button fx:id="menu" layoutX="269.0" layoutY="478.0" mnemonicParsing="false" text="Vissza az elejére" />
+      <Button fx:id="exitGame" layoutX="662.0" layoutY="478.0" mnemonicParsing="false" text="Kilépés a játékból" />
+      <Label fx:id="finishMessage" layoutX="494.0" layoutY="277.0" styleClass="finishLabel" text="Label" />
+   </children>
+</AnchorPane>

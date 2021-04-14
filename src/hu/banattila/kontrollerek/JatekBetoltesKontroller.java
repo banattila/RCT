@@ -5,12 +5,9 @@ import hu.banattila.mentes.Mentesek;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.ListCell;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
-import javafx.util.Callback;
-
 import java.io.IOException;
-import java.util.List;
 
 public class JatekBetoltesKontroller {
 
@@ -21,13 +18,24 @@ public class JatekBetoltesKontroller {
     @FXML
     ListView<String> uzenetek;
 
+    @FXML
+    private Button vissza;
 
-
+    private void setVissza(){
+        vissza.setOnAction( event -> {
+            try {
+                Main.setRoot("fxml/vidampark");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
 
     @FXML
-    private void initialize(){
-        uzenetek.setItems(mentesLista);
-        uzenetek.setOnMouseClicked( event -> {
+    private Button betolt;
+
+    private void betolt(){
+        betolt.setOnAction( event -> {
             String mentes = uzenetek.getFocusModel().getFocusedItem();
             Main.setJatek(Mentesek.betoltes(mentes+ ".txt"));
             try {
@@ -36,5 +44,12 @@ public class JatekBetoltesKontroller {
                 exception.printStackTrace();
             }
         });
+    }
+
+    @FXML
+    private void initialize(){
+        uzenetek.setItems(mentesLista);
+        setVissza();
+        betolt();
     }
 }

@@ -114,10 +114,6 @@ public class Jatek {
         Jatek.varhatoBevetel = varhatoBevetel;
     }
 
-    public static long getVarhatoKiadas() {
-        return varhatoKiadas;
-    }
-
     public static void setVarhatoKiadas(long varhatoKiadas) {
         Jatek.varhatoKiadas = varhatoKiadas;
     }

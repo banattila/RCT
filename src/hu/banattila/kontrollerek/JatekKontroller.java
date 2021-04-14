@@ -19,6 +19,8 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
 public class JatekKontroller {
 
@@ -66,6 +68,41 @@ public class JatekKontroller {
         reklamok.add(adSense);
     }
 
+    private void megrendeltReklam() {
+        Set<Reklamok> rm = Main.getJatek().getJatekos().getReklamok();
+        rm.stream().filter(Reklamok::isMegrendelve)
+                .forEach(megrendelt -> {
+                    reklamok.forEach( cimke -> {
+                        if (cimke.getText().equals(megrendelt.getNev())){
+                            cimke.setStyle("-fx-text-fill: red");
+                        }
+                    });
+                });
+
+        rm.stream().filter(reklam -> !reklam.isMegrendelve())
+                .forEach(nemMegrendelt -> {
+                    reklamok.forEach( cimke -> {
+                        if (nemMegrendelt.getNev().equals(cimke.getText())){
+                            cimke.setStyle("-fx-text-fill: black");
+                        }
+                    });
+                });
+
+        rm.stream().filter( reklam -> reklam.getHatasfok() == 100 && !reklam.isMegrendelve())
+                .forEach(fullos -> reklamok.forEach( cimke -> {
+                    if (fullos.getNev().equals(cimke.getText())){
+                        cimke.setStyle("-fx-text-fill: green");
+                    }
+                }));
+    }
+
+    private void reklamPanelSetText(Reklamok rm){
+        reklamAr.setText("Költsége: " + df.format(rm.getKoltseg()));
+        latogatoNoveles.setText(rm.getUjLatogatokNaponta() + " fő");
+        hatasfok.setText(String.format("%.2f", rm.getHatasfok()) + "%");
+        megrendelve.setText((rm.isMegrendelve()) ? "Meg van rendelve" : "Nincs megrendelve");
+    }
+
     private void initReklamok() {
         ujsaghirdetes.setText(ReklamNevek.UJSAGHIRDETES.getNev());
         szorolap.setText(ReklamNevek.SZOROLAPOZAS.getNev());
@@ -75,27 +112,29 @@ public class JatekKontroller {
 
     }
 
+
     private void setReklamok() {
         initReklamok();
+
         for (Label reklam : reklamok) {
+            Reklamok rm = Main.getJatek().getJatekos().getReklamok().stream()
+                    .filter(it -> it.getNev().equals(reklam.getText())).findFirst().get();
             reklam.setOnMouseClicked(event -> {
                 Main.getJatek().jatekosReklamoz(reklam.getText());
                 if (Main.getJatek().getUzenet().get(Main.getJatek().getUzenet().size() - 1).contains("Sikeresen megrendelted")
                         && Main.getJatek().getUzenet().get(Main.getJatek().getUzenet().size() - 1).contains(reklam.getText())) {
                     Main.getJatek().getJatekos().reklamoz(reklam.getText());
                     penz.setText("Pénzed: " + df.format(Main.getJatek().getJatekos().getPenz()) + " fabatka");
-                    reklam.setStyle("-fx-fill: red");
+                    reklam.setStyle("-fx-text-fill: red");
+                    reklamPanelSetText(rm);
                     setUzik();
                 }
             });
 
             reklam.setOnMouseEntered(event -> {
-                Reklamok rm = Main.getJatek().getJatekos().getReklamok().stream()
-                        .filter(it -> it.getNev().equals(reklam.getText())).findFirst().get();
-                reklamAr.setText("Költsége: " + df.format(rm.getKoltseg()));
-                latogatoNoveles.setText(rm.getUjLatogatokNaponta() + " fő");
-                hatasfok.setText(String.format("%.2f", rm.getHatasfok()) + "%");
-                megrendelve.setText((rm.isMegrendelve()) ? "Meg van rendelve" : "Nincs megrendelve");
+
+                reklamPanelSetText(rm);
+                megrendeltReklam();
                 reklamPanel.setVisible(true);
             });
             reklam.setOnMouseExited(event -> reklamPanel.setVisible(false));
@@ -187,7 +226,7 @@ public class JatekKontroller {
             int szamlalo = 0;
         };
         Main.getJatek().getJatekos().getKarbantartok().stream()
-                .filter(it -> it != null)
+                .filter(Objects::nonNull)
                 .forEach(it -> {
                     karbantartok.get(szam.szamlalo).setText(it.getNev());
                     szam.szamlalo++;
@@ -295,20 +334,32 @@ public class JatekKontroller {
     private void setNapVege() {
         napVege.setOnAction(event -> {
             Main.getJatek().napVege();
-            System.out.println(Main.getJatek());
-            if (Main.getJatek().getElteltNapok() <= 100 && Main.getJatek().getJatekos().getPenz() > 0) {
+            if (Main.getJatek().getElteltNapok() < 100 && Main.getJatek().getJatekos().getPenz() > 0) {
                 setTexts();
-            } else {
+            } else if(Main.getJatek().getJatekos().getPenz() < 0){
                 try {
-                    Main.setRoot("fxml/vidampark");
+                    Main.getJatek().clearUzenetek();
+                    Jatek.addUzenet(Main.getJatek().getJatekos().getNev() + " pénze sajnos elfogyott.");
+                    Main.setRoot("fxml/finish");
+                } catch (IOException exception) {
+                    exception.printStackTrace();
+                }
+            } else if(Main.getJatek().getElteltNapok() >= 100){
+                try {
+                    Main.getJatek().clearUzenetek();
+                    Jatek.addUzenet("Letelt a 100 nap, a játék véget ért");
+                    Main.setRoot("fxml/finish");
                 } catch (IOException exception) {
                     exception.printStackTrace();
                 }
             }
+
+
             if (autoSave.isSelected()) {
-                Mentesek.mentes(Main.getJatek());
+                Jatek.addUzenet(Mentesek.mentes(Main.getJatek()));
             }
             setLatogatok();
+            megrendeltReklam();
         });
     }
 
@@ -327,22 +378,27 @@ public class JatekKontroller {
     @FXML
     private Button csonakazo;
 
+    private void setJatekPanel(Button btn){
+        Jatekok jatek = Main.getJatek().getJatekos().getJatekok()
+                .stream().
+                        filter(it -> it.getId().equals(btn.getId())).findFirst().get();
+        jatekNev.setText(jatek.getNev());
+        szint.setText("Jelenlegi szint: " + jatek.getSzint());
+        ktg.setText(df.format(jatek.getFejlesztesKoltseg()) + " fabatka");
+        bevetel.setText("A napi bevételt noveli: " + df.format(jatek.getNyeresegLatogatonkent()) + " fabatka/fő");
+    }
+
     private void setJatekEvent(Button btn, String mit) {
         btn.setOnAction(actionEvent -> {
             Main.getJatek().jatekosFejleszt(mit);
             penz.setText("Pénzed: " + df.format(Main.getJatek().getJatekos().getPenz()) + " fabatka");
             setUzik();
+            setJatekPanel(btn);
         });
 
         btn.setOnMouseEntered(event -> {
             panel.setVisible(true);
-            Jatekok jatek = Main.getJatek().getJatekos().getJatekok()
-                    .stream().
-                            filter(it -> it.getId().equals(btn.getId())).findFirst().get();
-            jatekNev.setText(jatek.getNev());
-            szint.setText("Jelenlegi szint: " + jatek.getSzint());
-            ktg.setText(df.format(jatek.getFejlesztesKoltseg()) + " fabatka");
-            bevetel.setText("A napi bevételt noveli: " + df.format(jatek.getNyeresegLatogatonkent()) + " fabatka/fő");
+            setJatekPanel(btn);
         });
 
         btn.setOnMouseExited(event -> panel.setVisible(false));
@@ -361,6 +417,30 @@ public class JatekKontroller {
     private Button vattacukros;
 
     @FXML
+    private Button save;
+
+    private void save(){
+        save.setOnAction( event -> {
+            Mentesek.mentes(Main.getJatek());
+            Jatek.addUzenet(Mentesek.mentes(Main.getJatek()));
+            setUzik();
+        });
+    }
+
+    @FXML
+    private Button exit;
+
+    private void exit(){
+        exit.setOnAction( event -> {
+            try {
+                Main.setRoot("fxml/vidampark");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    @FXML
     private void initialize() {
         setTexts();
         setNapVege();
@@ -372,5 +452,7 @@ public class JatekKontroller {
         karbantartoAlkalmazasok();
         karbantartotKirug();
         infoPanelNotVisible();
+        save();
+        exit();
     }
 }
