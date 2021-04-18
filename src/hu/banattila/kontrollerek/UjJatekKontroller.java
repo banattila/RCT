@@ -53,10 +53,21 @@ public class UjJatekKontroller {
     private TextField nev;
 
     @FXML
+    private Button back;
+
+    @FXML
     private void initialize(){
         nehezseg.setItems(szintek);
         nehezseg.setValue(JatekSzintek.KONNYU.getName());
         kezdes();
+
+        back.setOnAction( event ->{
+            try {
+                Main.setRoot("fxml/vidampark");
+            } catch (IOException e){
+                e.printStackTrace();
+            }
+        });
 
     }
 }

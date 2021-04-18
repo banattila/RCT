@@ -19,15 +19,15 @@
       <Button id="korhinta" fx:id="korhinta" layoutX="264.0" layoutY="315.0" mnemonicParsing="false" prefHeight="159.0" prefWidth="189.0" text=" " />
       <Pane id="menu" layoutY="1.0" prefHeight="127.0" prefWidth="1024.0" styleClass="menu">
          <children>
-            <Label fx:id="nap" layoutX="38.0" layoutY="31.0" text="Nap" />
-            <Label fx:id="penz" layoutX="735.0" layoutY="31.0" text="Pénz" />
-            <Label fx:id="nev" layoutX="947.0" layoutY="59.0" text="Név" />
-            <Label fx:id="uzenetek" layoutX="135.0" layoutY="31.0" text="Üzenetek" />
-            <Label fx:id="latogatok" layoutX="735.0" layoutY="67.0" text="Látogatók Száma" />
-            <Label layoutX="947.0" layoutY="31.0" text="Név" />
+            <Label fx:id="nap" layoutX="38.0" layoutY="31.0" styleClass="inf" text="Nap" />
+            <Label fx:id="penz" layoutX="651.0" layoutY="31.0" styleClass="inf" text="Pénz" />
+            <Label fx:id="nev" layoutX="711.0" layoutY="64.0" styleClass="player" text="Név" textAlignment="RIGHT" />
+            <Label fx:id="uzenetek" layoutX="135.0" layoutY="31.0" styleClass="messages" text="Üzenetek" />
+            <Label fx:id="latogatok" layoutX="644.0" layoutY="97.0" styleClass="inf" text="Látogatók Száma" />
+            <Label layoutX="644.0" layoutY="64.0" styleClass="player" text="Név:" />
          </children>
       </Pane>
-      <Pane layoutX="727.0" layoutY="126.0" prefHeight="638.0" prefWidth="291.0" styleClass="infopanel">
+      <Pane layoutX="727.0" layoutY="126.0" prefHeight="638.0" prefWidth="297.0" styleClass="infopanel">
          <children>
             <Pane layoutX="14.0" layoutY="14.0" prefHeight="200.0" prefWidth="247.0">
                <children>
@@ -130,7 +130,6 @@
                   </Label>
                </children>
             </Pane>
-            <CheckBox fx:id="autoSave" layoutX="74.0" layoutY="615.0" mnemonicParsing="false" text="Automatikus mentés" />
             <Button id="napVege" fx:id="napVege" layoutX="102.0" layoutY="566.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="100.0" text="Nap Vége" />
             <Button fx:id="alkalmaz" layoutX="32.0" layoutY="514.0" mnemonicParsing="false" text="Alkalmaz" />
             <Button fx:id="kirug" layoutX="176.0" layoutY="514.0" mnemonicParsing="false" text="Kirúg" />
@@ -166,6 +165,7 @@
          </children>
       </Pane>
       <Button fx:id="exit" layoutX="38.0" layoutY="697.0" mnemonicParsing="false" text="Kilépés" />
-      <Button fx:id="save" layoutX="328.0" layoutY="697.0" mnemonicParsing="false" text="Mentés" />
+      <Button fx:id="save" layoutX="326.0" layoutY="671.0" mnemonicParsing="false" text="Mentés" />
+      <CheckBox fx:id="autoSave" layoutX="237.0" layoutY="723.0" mnemonicParsing="false" text="Automatikus mentés a nap végén" />
    </children>
 </AnchorPane>

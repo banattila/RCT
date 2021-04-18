@@ -20,7 +20,7 @@ public class Konyvelo extends Szemelyzet {
 
     public static Konyvelo konyvelotAlkalmaz() {
         if (konyvelo == null) {
-            konyvelo = new Konyvelo("Dr. Bokros Lajos");
+            konyvelo = new Konyvelo("Zsíros B. Ödön");
         }
         return konyvelo;
     }

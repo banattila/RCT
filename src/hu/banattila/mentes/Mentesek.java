@@ -157,7 +157,6 @@ public class Mentesek {
             } catch (MaximumJatekSzint e){
                 Jatek.addUzenet(e.getMessage());
             }
-            System.out.println(jatek);
 
         } catch (IOException e){
             e.printStackTrace();

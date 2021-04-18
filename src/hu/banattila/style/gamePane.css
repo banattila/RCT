@@ -20,15 +20,16 @@ AnchorPane {
 }
 
 Button {
-    -fx-background-color: black;
+    -fx-background-color: #7093fa;
     -fx-background-radius: 3 3 3 3;
     -fx-font-size: 1.2em;
-    -fx-text-fill: orange;
+    -fx-text-fill: white;
     -fx-padding: 10px;
 }
 
 Button:hover {
-    -fx-text-fill: #ff6f6f;
+    -fx-text-fill: #7093fa;
+    -fx-background-color: white;
 }
 
 #vattacukros {
@@ -78,10 +79,11 @@ Button:hover {
 }
 
 TextField {
-    -fx-background-color: black;
-    -fx-text-fill: orange;
+    -fx-background-color: #7093fa;
+    -fx-text-fill: white;
     -fx-border-color: orange;
     -fx-border-radius: 3px 3px;
+    -fx-font-weight: bolder;
 }
 
 Label {
@@ -103,11 +105,11 @@ Label {
 }
 
 .choice-box .context-menu {
-    -fx-background-color: black;
+    -fx-background-color: #7093fa;
 }
 
 .choice-box .menu-item:focused {
-    -fx-background-color: orange;
+    -fx-background-color: #ffbc65;
 }
 
 .choice-box .menu-item > .label {
@@ -119,10 +121,21 @@ Label {
 }
 
 .choice-box {
-    -fx-background-color: black;
-    -fx-mark-color: orange;
+    -fx-background-color: #7093fa;
+    -fx-mark-color: #ffbc65;
 }
 
 .choice-box > .label {
     -fx-text-fill: white;
+}
+
+.player {
+    -fx-font-weight: bolder;
+    -fx-text-fill: #1852ff;
+    -fx-font-size: 20px;
+    -fx-text-alignment: right;
+}
+
+.inf {
+    -fx-text-fill: #ff5454;
 }
