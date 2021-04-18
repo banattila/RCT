@@ -1,0 +1,9 @@
+Játéknap:2
+Játékszint:Közepes
+NapiLlátogatők:535
+Játékos név:sdfsfsf
+Játékos pénze:29100
+Könyvelő:nincs
+Karbantartók:
+Aktív reklámok:Szórólapozás,1,90.0,22;Óriásplakát,1,90.0,360;Újsághírdetés,1,90.0,90
+Játékok:hullamvasut,0,80,1200000;csonakazo,0,20,300000;szellemvasut,0,40,600000;korhinta,0,10,150000;vattacukros,1,10,200000;

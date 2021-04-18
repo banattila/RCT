@@ -6,6 +6,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import java.io.IOException;
 
@@ -17,6 +18,9 @@ public class JatekBetoltesKontroller {
 
     @FXML
     ListView<String> uzenetek;
+
+    @FXML
+    private Label noSaved;
 
     @FXML
     private Button vissza;
@@ -48,6 +52,11 @@ public class JatekBetoltesKontroller {
 
     @FXML
     private void initialize(){
+        if (mentesLista.size() == 0){
+            noSaved.setText("Nincs mentett játék");
+        } else {
+            noSaved.setText("");
+        }
         uzenetek.setItems(mentesLista);
         setVissza();
         betolt();

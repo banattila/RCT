@@ -1,0 +1,9 @@
+Játéknap:79
+Játékszint:Közepes
+NapiLlátogatők:57745
+Játékos név:Attila
+Játékos pénze:129211444648
+Könyvelő:nincs
+Karbantartók:
+Aktív reklámok:
+Játékok:vattacukros,10,55,102400000;korhinta,10,110,153600000;csonakazo,10,220,307200000;szellemvasut,10,440,614400000;hullamvasut,10,880,1228800000;

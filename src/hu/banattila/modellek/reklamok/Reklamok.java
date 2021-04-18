@@ -18,24 +18,26 @@ public abstract class Reklamok {
         this.nev = nev;
         this.idoTartam = idoTartam;
         this.megrendelve = false;
-        this.koltseg = koltseg;
-        init(jatekSzintek, ujLatogatokNaponta);
+        init(jatekSzintek, ujLatogatokNaponta, koltseg);
         this.ALAP_UJLATOGATOK = this.ujLatogatokNaponta;
         this.hatasfok = 100.0;
     }
 
-    private void init(JatekSzintek jatekSzintek, int ujLatogatokNaponta) {
+    private void init(JatekSzintek jatekSzintek, int ujLatogatokNaponta, int koltseg) {
         switch (jatekSzintek) {
             case KONNYU: {
                 this.ujLatogatokNaponta = ujLatogatokNaponta;
+                this.koltseg = koltseg;
                 break;
             }
             case KOZEPES: {
                 this.ujLatogatokNaponta = ujLatogatokNaponta / 2;
+                this.koltseg = koltseg * 2;
                 break;
             }
             case NEHEZ: {
                 this.ujLatogatokNaponta = ujLatogatokNaponta / 4;
+                this.koltseg = koltseg * 4;
                 break;
             }
         }

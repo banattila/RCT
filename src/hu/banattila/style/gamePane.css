@@ -52,10 +52,6 @@ Button:hover {
     -fx-background-image: url("imgs/csonakazo.jpeg");
 }
 
-#napVege {
-    -fx-background-image: url("imgs/homokora.jpeg");
-}
-
 .list-cell:filled:selected:focused, .list-cell:filled:selected {
     -fx-background-color: linear-gradient(#333 0%, #777 25%, #aaa 75%, #eee 100%);
     -fx-text-fill: #ff1a43;
@@ -138,4 +134,9 @@ Label {
 
 .inf {
     -fx-text-fill: #ff5454;
+}
+
+.noSaved {
+    -fx-text-fill: #ff5454;
+    -fx-font-size: 20px;
 }
